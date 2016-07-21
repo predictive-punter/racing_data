@@ -4,6 +4,7 @@ import cache_requests
 from lxml import html
 import punters_client
 import pytest
+import pytz
 import racing_data
 import redis
 import requests
@@ -46,6 +47,14 @@ def test_providers(meets, provider):
 
     for meet in meets:
         assert meet.provider == provider
+
+
+def test_timestamps(meets):
+    """All Meet objects should contain timezone aware created/updated at timestamps"""
+
+    for meet in meets:
+        for key in ('created_at', 'updated_at'):
+            assert meet[key].tzinfo == pytz.utc
 
 
 def test_types(meets):

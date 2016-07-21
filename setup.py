@@ -36,6 +36,7 @@ setup(
         'setuptools_scm'
     ],
     install_requires=[
+        'pytz',
         'setuptools_scm'
     ],
     extras_require={
