@@ -37,7 +37,8 @@ setup(
     ],
     install_requires=[
         'pytz',
-        'setuptools_scm'
+        'setuptools_scm',
+        'tzlocal'
     ],
     extras_require={
         'dev':  [

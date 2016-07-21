@@ -14,3 +14,10 @@ class Meet(dict):
 
         if not 'created_at' in self:
             self['created_at'] = self['updated_at'] = datetime.now(pytz.utc)
+
+        for key in self:
+            if isinstance(self[key], datetime):
+                try:
+                    self[key] = pytz.utc.localize(self[key])
+                except ValueError:
+                    pass
