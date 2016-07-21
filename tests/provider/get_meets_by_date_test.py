@@ -3,13 +3,14 @@ from datetime import datetime
 import cache_requests
 from lxml import html
 import punters_client
+import pytest
 import racing_data
 import redis
 import requests
 
 
-def test_count():
-    """The get_meets_by_date method should return the expected number of meets"""
+@pytest.fixture(scope='module')
+def meets():
 
     date = datetime(2016, 2, 1)
 
@@ -28,6 +29,18 @@ def test_count():
 
     provider = racing_data.Provider(scraper)
 
-    meets = provider.get_meets_by_date(date)
+    return provider.get_meets_by_date(date)
+
+
+def test_count(meets):
+    """The get_meets_by_date method should return the expected number of meets"""
 
     assert len(meets) == 2
+
+
+def test_types(meets):
+    """The get_meets_by_date method should return a list of Meet objects"""
+
+    assert isinstance(meets, list)
+    for meet in meets:
+        assert isinstance(meet, racing_data.Meet)
