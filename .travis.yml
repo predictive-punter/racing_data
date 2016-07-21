@@ -1,0 +1,21 @@
+language: python
+python: '3.5'
+env:
+- TOXENV=py27
+- TOXENV=py35
+install:
+- pip install tox coveralls
+script:
+- tox -e $TOXENV
+after_success:
+- coveralls
+deploy:
+  provider: pypi
+  user: justjasongreen
+  password:
+    secure: JOUxWanlNNicp+gbl7U4NfFG53DJLAUgVeTpkImdLE0nbdW0QKJ5ftpXYB357F2kRnAggV8drwhmOvEXs5SwZQPo87nAKYCg/96Nk5foODblbQv4ZkyRrdfuMru/ryaJCXevKygSlZuw/4BsWxNv0VcNvk7s+v2Z1Vj968OHnxFTMgKBQ25sCRpRl8LyXlB6H9Mu70ukCve/oek5deYf4EJrdeNep4sqzMg2at/IN6vfOS242T3md8NTjJLPGZBgmBDqtZ7SusmoCaQn4BJihC0gSvrYm9cCMWxCva9vFwm16qy5GIrS1gVcxsE2ysUxBWFjvTOe8HqabmJ53zVHoJgzokGKBK04EooyTNzCEdL4uHh41936o+N6o7KbJ/6fN6UecGU7wJs1yed2w7lkew65ovLvL+JZFCLXVA8CEOh3AMByrGqXqwRmUHocyN0mpcVjjN5ovp0IQPTeGRS48OccOm9WjG4ITPyrLEDu6IhVABhuq2QrTeupSwaZV2bJ34mvieWALOlpYXotXNwAdAu3mtxGZOSXdBZ84PscZ2EU6q75g4qAKFFu2/64JtVga3UX/qZ3OFMQPq8QROz6PFCfIgXTGAzu9VhrAR2T6zEsFca23yaXR7PNWQ/vfMferyVUkl3U/jhpaphxrkwLIT983KtpVaQIQo1wkQD5DUA=
+  distributions: sdist bdist_wheel
+  on:
+    repo: justjasongreen/racing_data
+    tags: true
+    condition: $TOXENV = py35
