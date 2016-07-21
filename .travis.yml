@@ -1,5 +1,7 @@
 language: python
 python: '3.5'
+services:
+- mongodb
 env:
 - TOXENV=py27
 - TOXENV=py35
