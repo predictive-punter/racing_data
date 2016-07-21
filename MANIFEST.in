@@ -1,0 +1,5 @@
+include *.ini
+include *.md
+include *.rst
+include *.txt
+recursive-include tests *.py
