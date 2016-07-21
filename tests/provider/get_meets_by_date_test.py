@@ -10,9 +10,14 @@ import requests
 
 
 @pytest.fixture(scope='module')
-def meets():
+def meets(provider):
 
     date = datetime(2016, 2, 1)
+    return provider.get_meets_by_date(date)
+
+
+@pytest.fixture(scope='module')
+def provider():
 
     http_client = None
     try:
@@ -27,15 +32,20 @@ def meets():
 
     scraper = punters_client.Scraper(http_client, html_parser)
 
-    provider = racing_data.Provider(scraper)
-
-    return provider.get_meets_by_date(date)
+    return racing_data.Provider(scraper)
 
 
 def test_count(meets):
     """The get_meets_by_date method should return the expected number of meets"""
 
     assert len(meets) == 2
+
+
+def test_providers(meets, provider):
+    """All Meet objects should contain a reference to the provider instance from which they were sourced"""
+
+    for meet in meets:
+        assert meet.provider == provider
 
 
 def test_types(meets):
