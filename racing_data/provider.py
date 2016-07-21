@@ -30,11 +30,30 @@ class Provider:
         date = date.astimezone(pytz.utc)
 
         meets = [Meet(self, values) for values in self.get_database_collection(Meet).find({'date': date})]
-        if len(meets) < 1:
 
-            meets = [Meet(self, values) for values in self.scraper.scrape_meets(date)]
-            for meet in meets:
-                self.save(meet)
+        must_create = len(meets) < 1
+        for meet in meets:
+            if meet['updated_at'] < meet['date']:
+                must_create = True
+                break
+
+        if must_create:
+            for created_meet in [Meet(self, values) for values in self.scraper.scrape_meets(date)]:
+
+                found_meet = False
+
+                for meet in meets:
+                    if meet['date'] == created_meet['date'] and meet['track'] == created_meet['track']:
+                        for key in created_meet:
+                            if key != 'created_at':
+                                meet[key] = created_meet[key]
+                        self.save(meet)
+                        found_meet = True
+                        break
+
+                if not found_meet:
+                    self.save(created_meet)
+                    meets.append(created_meet)
 
         return meets
 

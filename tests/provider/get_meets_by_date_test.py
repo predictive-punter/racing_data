@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import cache_requests
 from lxml import html
@@ -85,3 +85,22 @@ def test_types(meets):
     assert isinstance(meets, list)
     for meet in meets:
         assert isinstance(meet, racing_data.Meet)
+
+
+def test_updates(provider):
+    """Subsequent identical calls to get_meets_by_date with a future date should return the same Meet objects updated"""
+
+    future_date = datetime.now() + timedelta(days=1)
+
+    old_meets = provider.get_meets_by_date(future_date)
+    new_meets = provider.get_meets_by_date(future_date)
+
+    for new_meet in new_meets:
+
+        found_meet = None
+        for old_meet in old_meets:
+            if old_meet['_id'] == new_meet['_id']:
+                found_meet = old_meet
+                break
+
+        assert new_meet['updated_at'] > found_meet['updated_at']
