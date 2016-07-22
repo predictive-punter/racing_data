@@ -17,6 +17,12 @@ class Runner(Entity):
         return self.get_cached_property('horse', self.provider.get_horse_by_runner, self)
 
     @property
+    def jockey(self):
+        """Return the jockey associated with this runner"""
+
+        return self.get_cached_property('jockey', self.provider.get_jockey_by_runner, self)
+
+    @property
     def race(self):
         """Return the race in which this runner is competing"""
 
