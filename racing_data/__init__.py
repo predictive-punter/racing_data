@@ -1,4 +1,4 @@
-__version__ = '1.0.0a0'
+__version__ = '1.0.0a1'
 
 from .entity import Entity
 from .meet import Meet
