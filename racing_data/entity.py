@@ -39,8 +39,3 @@ class Entity(dict):
             self.property_cache[key] = source_method(*source_args, **source_kwargs)
 
         return self.property_cache[key]
-
-    def is_equivalent_to(self, other_entity):
-        """This entity is equivalent to other_entity if both have been sourced from the same URL"""
-
-        return self['url'] == other_entity['url']
