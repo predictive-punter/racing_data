@@ -1,7 +1,7 @@
 import pytz
 import tzlocal
 
-from . import Meet, Race
+from . import Meet, Race, Runner
 
 
 class Provider:
@@ -19,16 +19,24 @@ class Provider:
 
         return self.database[entity_type.__name__.lower() + 's']
 
-    def find(self, entity_type, query):
+    def find(self, entity_type, query, property_cache):
         """Find entities of the specified type matching the specified query in the database"""
 
         collection = self.get_database_collection(entity_type)
-        return [entity_type(self, values) for values in collection.find(query)]
+        return [entity_type(self, property_cache, values) for values in collection.find(query)]
 
-    def find_or_create(self, entity_type, query, create_method, *create_args, **create_kwargs):
+    def find_one(self, entity_type, query, property_cache):
+        """Find a single entity of the specified type matching the specified query in the database"""
+
+        collection = self.get_database_collection(entity_type)
+        values = collection.find_one(query)
+        if values is not None:
+            return entity_type(self, property_cache, values)
+
+    def find_or_create(self, entity_type, query, property_cache, create_method, *create_args, **create_kwargs):
         """Find or create entities of the specified type matching the specified query"""
 
-        entities = self.find(entity_type, query)
+        entities = self.find(entity_type, query, property_cache)
 
         must_create = len(entities) < 1
         for entity in entities:
@@ -37,7 +45,7 @@ class Provider:
                 break
 
         if must_create:
-            for created_entity in [entity_type(self, values) for values in create_method(*create_args, **create_kwargs)]:
+            for created_entity in [entity_type(self, property_cache, values) for values in create_method(*create_args, **create_kwargs)]:
 
                 for key in query:
                     created_entity[key] = query[key]
@@ -71,12 +79,22 @@ class Provider:
         date = date.astimezone(self.scraper.SOURCE_TIMEZONE).replace(hour=0, minute=0, second=0, microsecond=0)
         date = date.astimezone(pytz.utc)
 
-        return self.find_or_create(Meet, {'date': date}, self.scraper.scrape_meets, date)
+        return self.find_or_create(Meet, {'date': date}, None, self.scraper.scrape_meets, date)
 
     def get_races_by_meet(self, meet):
         """Get a list of races occurring at the specified meet"""
 
-        return self.find_or_create(Race, {'meet_id': meet['_id']}, self.scraper.scrape_races, meet)
+        return self.find_or_create(Race, {'meet_id': meet['_id']}, {'meet': meet}, self.scraper.scrape_races, meet)
+
+    def get_race_by_runner(self, runner):
+        """Get the race in which the specified runner competes"""
+
+        return self.find_one(Race, {'_id': runner['race_id']}, None)
+
+    def get_runners_by_race(self, race):
+        """Get a list of runners competing in the specified race"""
+
+        return self.find_or_create(Runner, {'race_id': race['_id']}, {'race': race}, self.scraper.scrape_runners, race)
 
     def save(self, entity):
         """Save the specified entity to the database"""
