@@ -24,12 +24,19 @@ def check_providers(collection, provider):
         assert item.provider == provider
 
 
-def check_timestamps(collection):
+def check_timestamps(target):
     """All items in collection should contain timezone aware created/updated at timestamps"""
 
-    for item in collection:
+    if isinstance(target, list):
+
+        for item in target:
+            for key in ('created_at', 'updated_at'):
+                assert item[key].tzinfo == pytz.utc
+
+    else:
+
         for key in ('created_at', 'updated_at'):
-            assert item[key].tzinfo == pytz.utc
+            assert target[key].tzinfo == pytz.utc
 
 
 def check_types(collection, collection_type, item_type):

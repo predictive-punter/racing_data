@@ -36,6 +36,18 @@ def future_race(future_meet, provider):
 
 
 @pytest.fixture(scope='session')
+def future_runner(future_race, provider):
+
+    return provider.get_runners_by_race(future_race)[0]
+
+
+@pytest.fixture(scope='session')
+def future_horse(future_runner, provider):
+
+    return provider.get_horse_by_runner(future_runner)
+
+
+@pytest.fixture(scope='session')
 def meets(date, provider):
 
     return provider.get_meets_by_date(date)
@@ -67,6 +79,20 @@ def race(races):
 def runners(race, provider):
 
     return provider.get_runners_by_race(race)
+
+
+@pytest.fixture(scope='session')
+def runner(runners):
+
+    for runner in runners:
+        if runner['number'] == 1:
+            return runner
+
+
+@pytest.fixture(scope='session')
+def horse(runner, provider):
+
+    return provider.get_horse_by_runner(runner)
 
 
 @pytest.fixture(scope='session')

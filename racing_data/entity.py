@@ -41,6 +41,6 @@ class Entity(dict):
         return self.property_cache[key]
 
     def is_equivalent_to(self, other_entity):
-        """This entity is equivalent to other_entity if both are equal"""
+        """This entity is equivalent to other_entity if both have been sourced from the same URL"""
 
-        return self == other_entity
+        return self['url'] == other_entity['url']
