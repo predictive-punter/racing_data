@@ -8,11 +8,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Get meets by date (from @justjasongreen)
 - Get races by meet (from @justjasongreen)
+- Get meet by race (from @justjasongreen)
 - Get runners by race (from @justjasongreen)
+- Get race by runner (from @justjasongreen)
 - Get horse by runner (from @justjasongreen)
 - Get jockey by runner (from @justjasongreen)
 - Get trainer by runner (from @justjasongreen)
 - Get performances by horse (from @justjasongreen)
+- Get horse by performance (from @justjasongreen)
+- Get performances by jockey (from @justjasongreen)
+- Get jockey by performance (from @justjasongreen)
 
 ## [1.0.0a0] - 2016-07-21
 ### Added

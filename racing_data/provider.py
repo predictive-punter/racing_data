@@ -108,6 +108,11 @@ class Provider:
 
         return self.find_or_create(Meet, {'date': date}, None, self.scraper.scrape_meets, date)
 
+    def get_meet_by_race(self, race):
+        """Get the meet at which the specified race occurs"""
+
+        return self.find_one(Meet, {'_id': race['meet_id']}, None)
+
     def get_races_by_meet(self, meet):
         """Get a list of races occurring at the specified meet"""
 
@@ -147,6 +152,16 @@ class Provider:
         """Get the horse associated with the specified performance"""
 
         return self.find_or_create_one(Horse, {'url': performance['horse_url']}, None, None, self.scraper.scrape_profile, performance['horse_url'])
+
+    def get_performances_by_jockey(self, jockey):
+        """Get a list of performances for the specified jockey"""
+
+        return self.find(Performance, {'jockey_url': jockey['url']}, {'jockey': jockey})
+
+    def get_jockey_by_performance(self, performance):
+        """Get the jockey associated with the specified performance"""
+
+        return self.find_or_create_one(Jockey, {'url': performance['jockey_url']}, None, None, self.scraper.scrape_profile, performance['jockey_url'])
 
     def save(self, entity):
         """Save the specified entity to the database"""

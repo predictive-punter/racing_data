@@ -16,6 +16,12 @@ class Performance(Entity):
 
         return self.get_cached_property('horse', self.provider.get_horse_by_performance, self)
 
+    @property
+    def jockey(self):
+        """Return the jockey associated with this performance"""
+
+        return self.get_cached_property('jockey', self.provider.get_jockey_by_performance, self)
+
     def is_equivalent_to(self, other_performance):
         """This performance is equivalent to other_performance if both have the same horse_url, track and date"""
 

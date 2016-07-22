@@ -126,6 +126,14 @@ def performances(horse, provider):
 
 
 @pytest.fixture(scope='session')
+def performance(meet, performances):
+
+    for performance in performances:
+        if performance['date'] == meet['date'] and performance['track'] == meet['track']:
+            return performance
+
+
+@pytest.fixture(scope='session')
 def provider():
 
     database_uri = 'mongodb://localhost:27017/racing_data_test'
