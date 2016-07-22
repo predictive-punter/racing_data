@@ -153,6 +153,11 @@ class Provider:
 
         return self.find_or_create_one(Horse, {'url': performance['horse_url']}, None, None, self.scraper.scrape_profile, performance['horse_url'])
 
+    def get_performances_by_jockey(self, jockey):
+        """Get a list of performances for the specified jockey"""
+
+        return self.find(Performance, {'jockey_url': jockey['url']}, {'jockey': jockey})
+
     def save(self, entity):
         """Save the specified entity to the database"""
 
