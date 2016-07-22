@@ -36,7 +36,7 @@ class Entity(dict):
             self.property_cache = {}
 
         if key not in self.property_cache:
-            self.property_cache = source_method(*source_args, **source_kwargs)
+            self.property_cache[key] = source_method(*source_args, **source_kwargs)
 
         return self.property_cache[key]
 
