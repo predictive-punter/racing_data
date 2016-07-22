@@ -1,7 +1,7 @@
 import pytz
 import tzlocal
 
-from . import Meet, Race, Runner, Horse, Jockey, Trainer
+from . import Meet, Race, Runner, Horse, Jockey, Trainer, Performance
 
 
 class Provider:
@@ -137,6 +137,16 @@ class Provider:
         """Get the trainer associated with the specified runner"""
 
         return self.find_or_create_one(Trainer, {'url': runner['trainer_url']}, None, runner.race['start_time'], self.scraper.scrape_trainer, runner)
+
+    def get_performances_by_horse(self, horse):
+        """Get a list of performances for the specified horse"""
+
+        return self.find_or_create(Performance, {'horse_url': horse['url']}, {'horse': horse}, self.scraper.scrape_performances, horse)
+
+    def get_horse_by_performance(self, performance):
+        """Get the horse associated with the specified performance"""
+
+        return self.find_or_create_one(Horse, {'url': performance['horse_url']}, None, None, self.scraper.scrape_profile, performance['horse_url'])
 
     def save(self, entity):
         """Save the specified entity to the database"""
