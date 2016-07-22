@@ -9,5 +9,6 @@ from .runner import Runner
 from .horse import Horse
 from .jockey import Jockey
 from .trainer import Trainer
+from .performance import Performance
 
 from .provider import Provider
