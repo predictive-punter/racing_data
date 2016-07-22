@@ -5,5 +5,6 @@ from .entity import Entity
 
 from .meet import Meet
 from .race import Race
+from .runner import Runner
 
 from .provider import Provider
