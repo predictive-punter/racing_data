@@ -11,6 +11,12 @@ class Runner(Entity):
         return self['updated_at'] < self.race['start_time'] or super(Runner, self).has_expired
 
     @property
+    def horse(self):
+        """Return the horse associated with this runner"""
+
+        return self.get_cached_property('horse', self.provider.get_horse_by_runner, self)
+
+    @property
     def race(self):
         """Return the race in which this runner is competing"""
 
