@@ -54,6 +54,12 @@ def future_jockey(future_runner, provider):
 
 
 @pytest.fixture(scope='session')
+def future_trainer(future_runner, provider):
+
+    return provider.get_trainer_by_runner(future_runner)
+
+
+@pytest.fixture(scope='session')
 def meets(date, provider):
 
     return provider.get_meets_by_date(date)
@@ -105,6 +111,12 @@ def horse(runner, provider):
 def jockey(runner, provider):
 
     return provider.get_jockey_by_runner(runner)
+
+
+@pytest.fixture(scope='session')
+def trainer(runner, provider):
+
+    return provider.get_trainer_by_runner(runner)
 
 
 @pytest.fixture(scope='session')
