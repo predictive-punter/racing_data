@@ -126,9 +126,11 @@ def performances(horse, provider):
 
 
 @pytest.fixture(scope='session')
-def performance(performances):
+def performance(meet, performances):
 
-    return performances[0]
+    for performance in performances:
+        if performance['date'] == meet['date'] and performance['track'] == meet['track']:
+            return performance
 
 
 @pytest.fixture(scope='session')
