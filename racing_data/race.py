@@ -10,6 +10,12 @@ class Race(Entity):
 
         return self['updated_at'] < self['start_time'] or super(Race, self).has_expired
 
+    @property
+    def meet(self):
+        """Return the meet at which this race occurs"""
+
+        return self.get_cached_property('meet', self.provider.get_meet_by_race, self)
+
     def is_equivalent_to(self, other_race):
         """This race is equivalent to other_race if both have the same meet_id and number"""
 
