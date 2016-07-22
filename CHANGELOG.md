@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+
 ## [Unreleased]
+
 ### Added
 - Get meets by date (from @justjasongreen)
 - Get races by meet (from @justjasongreen)
@@ -18,10 +20,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Get horse by performance (from @justjasongreen)
 - Get performances by jockey (from @justjasongreen)
 - Get jockey by performance (from @justjasongreen)
+- Automatically check manifest contents on Travis CI (from @justjasongreen)
+
+## Changed
+- Move from setuptools_scm to bumpversion for version management (from @justjasongreen)
+
 
 ## [1.0.0a0] - 2016-07-21
+
 ### Added
 - Set up project (from @justjasongreen)
+
 
 [Unreleased]: https://github.com/justjasongreen/racing_data/compare/1.0.0a0...HEAD
 [1.0.0a0]: https://github.com/justjasongreen/racing_data/tree/1.0.0a0
