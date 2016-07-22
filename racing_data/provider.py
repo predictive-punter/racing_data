@@ -1,7 +1,7 @@
 import pytz
 import tzlocal
 
-from . import Meet, Race, Runner
+from . import Meet, Race, Runner, Horse
 
 
 class Provider:
@@ -68,6 +68,33 @@ class Provider:
                     entities.append(created_entity)
 
         return entities
+
+    def find_or_create_one(self, entity_type, query, property_cache, expiry_date, create_method, *create_args, **create_kwargs):
+        """Find or create a single entity of the specified type matching the specified query"""
+
+        entity = self.find_one(entity_type, query, property_cache)
+        if entity is None or (expiry_date is not None and entity['updated_at'] < expiry_date) or entity.has_expired:
+
+            values = create_method(*create_args, **create_kwargs)
+            if values is not None:
+
+                for key in query:
+                    values[key] = query[key]
+
+                created_entity = entity_type(self, property_cache, values)
+
+                if entity is None:
+                    self.save(created_entity)
+                    return created_entity
+
+                else:
+
+                    for key in created_entity:
+                        if key != 'created_at':
+                            entity[key] = created_entity[key]
+                    self.save(entity)
+
+        return entity
     
     def get_meets_by_date(self, date):
         """Get a list of meets occurring on the specified date"""
@@ -95,6 +122,11 @@ class Provider:
         """Get a list of runners competing in the specified race"""
 
         return self.find_or_create(Runner, {'race_id': race['_id']}, {'race': race}, self.scraper.scrape_runners, race)
+
+    def get_horse_by_runner(self, runner):
+        """Get the horse associated with the specified runner"""
+
+        return self.find_or_create_one(Horse, {'url': runner['horse_url']}, None, runner.race['start_time'], self.scraper.scrape_horse, runner)
 
     def save(self, entity):
         """Save the specified entity to the database"""

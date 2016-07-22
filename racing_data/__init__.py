@@ -6,5 +6,6 @@ from .entity import Entity
 from .meet import Meet
 from .race import Race
 from .runner import Runner
+from .horse import Horse
 
 from .provider import Provider
