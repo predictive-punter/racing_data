@@ -16,6 +16,12 @@ class Race(Entity):
 
         return self.get_cached_property('meet', self.provider.get_meet_by_race, self)
 
+    @property
+    def runners(self):
+        """Return a list of runners competing in this race"""
+
+        return self.get_cached_property('runners', self.provider.get_runners_by_race, self)
+
     def is_equivalent_to(self, other_race):
         """This race is equivalent to other_race if both have the same meet_id and number"""
 
