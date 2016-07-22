@@ -126,6 +126,12 @@ def performances(horse, provider):
 
 
 @pytest.fixture(scope='session')
+def performance(performances):
+
+    return performances[0]
+
+
+@pytest.fixture(scope='session')
 def provider():
 
     database_uri = 'mongodb://localhost:27017/racing_data_test'

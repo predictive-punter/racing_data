@@ -15,6 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Get jockey by runner (from @justjasongreen)
 - Get trainer by runner (from @justjasongreen)
 - Get performances by horse (from @justjasongreen)
+- Get horse by performance (from @justjasongreen)
 
 ## [1.0.0a0] - 2016-07-21
 ### Added
