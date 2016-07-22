@@ -1,23 +1,16 @@
-from datetime import datetime
-
-import pytz
+from . import Entity
 
 
-class Meet(dict):
+class Meet(Entity):
     """A meet represents a collection of races occurring at a given track on a given date"""
     
-    def __init__(self, provider, *args, **kwargs):
+    @property
+    def has_expired(self):
+        """Expire meets that were last updated prior to their actual date"""
 
-        super(Meet, self).__init__(*args, **kwargs)
+        return self['updated_at'] < self['date'] or super(Meet, self).has_expired
 
-        self.provider = provider
+    def is_equivalent_to(self, other_meet):
+        """This meet is equivalent to other_meet if both have the same date and track"""
 
-        if not 'created_at' in self:
-            self['created_at'] = self['updated_at'] = datetime.now(pytz.utc)
-
-        for key in self:
-            if isinstance(self[key], datetime):
-                try:
-                    self[key] = pytz.utc.localize(self[key])
-                except ValueError:
-                    pass
+        return self['date'] == other_meet['date'] and self['track'] == other_meet['track']
