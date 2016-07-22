@@ -6,9 +6,10 @@ env:
 - TOXENV=py27
 - TOXENV=py35
 install:
-- pip install tox coveralls
+- pip install tox check-manifest coveralls
 script:
 - tox -e $TOXENV
+- check-manifest
 after_success:
 - coveralls
 deploy:

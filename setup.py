@@ -12,7 +12,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='racing_data',
-    use_scm_version=True,
+    version='1.0.0a0',
     description='Python horse racing class library',
     long_description=long_description,
     keywords='horse racing class library',
@@ -32,16 +32,14 @@ setup(
     license='MIT',
 
     packages=find_packages(exclude=['tests']),
-    setup_requires=[
-        'setuptools_scm'
-    ],
+    setup_requires=[],
     install_requires=[
         'pytz',
-        'setuptools_scm',
         'tzlocal'
     ],
     extras_require={
         'dev':  [
+            'bumpversion',
             'check-manifest'
         ],
         'test': [
