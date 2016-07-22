@@ -28,6 +28,12 @@ class Runner(Entity):
 
         return self.get_cached_property('race', self.provider.get_race_by_runner, self)
 
+    @property
+    def trainer(self):
+        """Return the trainer associated with this runner"""
+
+        return self.get_cached_property('trainer', self.provider.get_trainer_by_runner, self)
+
     def is_equivalent_to(self, other_runner):
         """This runner is equivalent to other_runner if both have the same race_id and number"""
 

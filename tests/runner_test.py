@@ -14,3 +14,9 @@ def test_race(race, runner):
     """The race property should return the race in which the runner competes"""
 
     assert runner.race['_id'] == race['_id']
+
+
+def test_trainer(trainer, runner):
+    """The trainer property should return the trainer associated with the runner"""
+
+    assert runner.trainer['_id'] == trainer['_id']
