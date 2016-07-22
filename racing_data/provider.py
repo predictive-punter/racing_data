@@ -1,7 +1,7 @@
 import pytz
 import tzlocal
 
-from . import Meet
+from . import Meet, Race
 
 
 class Provider:
@@ -18,6 +18,48 @@ class Provider:
         """Get the database collection for the specified entity type"""
 
         return self.database[entity_type.__name__.lower() + 's']
+
+    def find(self, entity_type, query):
+        """Find entities of the specified type matching the specified query in the database"""
+
+        collection = self.get_database_collection(entity_type)
+        return [entity_type(self, values) for values in collection.find(query)]
+
+    def find_or_create(self, entity_type, query, create_method, *create_args, **create_kwargs):
+        """Find or create entities of the specified type matching the specified query"""
+
+        entities = self.find(entity_type, query)
+
+        must_create = len(entities) < 1
+        for entity in entities:
+            if entity.has_expired:
+                must_create = True
+                break
+
+        if must_create:
+            for created_entity in [entity_type(self, values) for values in create_method(*create_args, **create_kwargs)]:
+
+                for key in query:
+                    created_entity[key] = query[key]
+
+                found_entity = False
+
+                for entity in entities:
+                    if entity.is_equivalent_to(created_entity):
+
+                        for key in created_entity:
+                            if key != 'created_at':
+                                entity[key] = created_entity[key]
+                        self.save(entity)
+
+                        found_entity = True
+                        break
+
+                if not found_entity:
+                    self.save(created_entity)
+                    entities.append(created_entity)
+
+        return entities
     
     def get_meets_by_date(self, date):
         """Get a list of meets occurring on the specified date"""
@@ -29,33 +71,12 @@ class Provider:
         date = date.astimezone(self.scraper.SOURCE_TIMEZONE).replace(hour=0, minute=0, second=0, microsecond=0)
         date = date.astimezone(pytz.utc)
 
-        meets = [Meet(self, values) for values in self.get_database_collection(Meet).find({'date': date})]
+        return self.find_or_create(Meet, {'date': date}, self.scraper.scrape_meets, date)
 
-        must_create = len(meets) < 1
-        for meet in meets:
-            if meet['updated_at'] < meet['date']:
-                must_create = True
-                break
+    def get_races_by_meet(self, meet):
+        """Get a list of races occurring at the specified meet"""
 
-        if must_create:
-            for created_meet in [Meet(self, values) for values in self.scraper.scrape_meets(date)]:
-
-                found_meet = False
-
-                for meet in meets:
-                    if meet['date'] == created_meet['date'] and meet['track'] == created_meet['track']:
-                        for key in created_meet:
-                            if key != 'created_at':
-                                meet[key] = created_meet[key]
-                        self.save(meet)
-                        found_meet = True
-                        break
-
-                if not found_meet:
-                    self.save(created_meet)
-                    meets.append(created_meet)
-
-        return meets
+        return self.find_or_create(Race, {'meet_id': meet['_id']}, self.scraper.scrape_races, meet)
 
     def save(self, entity):
         """Save the specified entity to the database"""
