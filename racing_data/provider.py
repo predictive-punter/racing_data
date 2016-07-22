@@ -108,6 +108,11 @@ class Provider:
 
         return self.find_or_create(Meet, {'date': date}, None, self.scraper.scrape_meets, date)
 
+    def get_meet_by_race(self, race):
+        """Get the meet at which the specified race occurs"""
+
+        return self.find_one(Meet, {'_id': race['meet_id']}, None)
+
     def get_races_by_meet(self, meet):
         """Get a list of races occurring at the specified meet"""
 
