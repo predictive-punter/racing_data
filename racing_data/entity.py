@@ -11,7 +11,7 @@ class Entity(dict):
         super(Entity, self).__init__(*args, **kwargs)
 
         self.provider = provider
-        self.property_cache = property_cache
+        self.property_cache = dict(**property_cache) if property_cache is not None else dict()
 
         if not 'created_at' in self:
             self['created_at'] = self['updated_at'] = datetime.now(pytz.utc)
@@ -31,9 +31,6 @@ class Entity(dict):
 
     def get_cached_property(self, key, source_method, *source_args, **source_kwargs):
         """Get a cached property value, or source, cache and return it if necessary"""
-
-        if self.property_cache is None:
-            self.property_cache = {}
 
         if key not in self.property_cache:
             self.property_cache[key] = source_method(*source_args, **source_kwargs)
