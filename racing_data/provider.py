@@ -1,3 +1,5 @@
+from threading import RLock
+
 import pytz
 import tzlocal
 
@@ -15,6 +17,8 @@ class Provider:
         self.local_timezone = local_timezone
 
         self.create_database_indexes()
+
+        self.query_locks = dict()
 
     @property
     def database_indexes(self):
@@ -59,6 +63,18 @@ class Provider:
 
         return self.database[entity_type.__name__.lower() + 's']
 
+    def get_query_lock(self, entity_type, query):
+        """Get the query lock for the specified entity type and query"""
+
+        if entity_type not in self.query_locks:
+            self.query_locks[entity_type] = dict()
+
+        hashed_query = hash(tuple([(key, query[key]) for key in sorted(query.keys())]))
+        if hashed_query not in self.query_locks[entity_type]:
+            self.query_locks[entity_type][hashed_query] = RLock()
+
+        return self.query_locks[entity_type][hashed_query]
+
     def find(self, entity_type, query, property_cache):
         """Find entities of the specified type matching the specified query in the database"""
 
@@ -76,65 +92,69 @@ class Provider:
     def find_or_create(self, entity_type, query, property_cache, create_method, *create_args, **create_kwargs):
         """Find or create entities of the specified type matching the specified query"""
 
-        entities = self.find(entity_type, query, property_cache)
+        with self.get_query_lock(entity_type, query):
 
-        must_create = len(entities) < 1
-        for entity in entities:
-            if entity.has_expired:
-                must_create = True
-                break
+            entities = self.find(entity_type, query, property_cache)
 
-        if must_create:
-            for created_entity in [entity_type(self, property_cache, values) for values in create_method(*create_args, **create_kwargs)]:
+            must_create = len(entities) < 1
+            for entity in entities:
+                if entity.has_expired:
+                    must_create = True
+                    break
 
-                for key in query:
-                    created_entity[key] = query[key]
+            if must_create:
+                for created_entity in [entity_type(self, property_cache, values) for values in create_method(*create_args, **create_kwargs)]:
 
-                found_entity = False
+                    for key in query:
+                        created_entity[key] = query[key]
 
-                for entity in entities:
-                    if entity.is_equivalent_to(created_entity):
+                    found_entity = False
+
+                    for entity in entities:
+                        if entity.is_equivalent_to(created_entity):
+
+                            for key in created_entity:
+                                if key != 'created_at':
+                                    entity[key] = created_entity[key]
+                            self.save(entity)
+
+                            found_entity = True
+                            break
+
+                    if not found_entity:
+                        self.save(created_entity)
+                        entities.append(created_entity)
+
+            return entities
+
+    def find_or_create_one(self, entity_type, query, property_cache, expiry_date, create_method, *create_args, **create_kwargs):
+        """Find or create a single entity of the specified type matching the specified query"""
+
+        with self.get_query_lock(entity_type, query):
+
+            entity = self.find_one(entity_type, query, property_cache)
+            if entity is None or (expiry_date is not None and entity['updated_at'] < expiry_date) or entity.has_expired:
+
+                values = create_method(*create_args, **create_kwargs)
+                if values is not None:
+
+                    for key in query:
+                        values[key] = query[key]
+
+                    created_entity = entity_type(self, property_cache, values)
+
+                    if entity is None:
+                        self.save(created_entity)
+                        return created_entity
+
+                    else:
 
                         for key in created_entity:
                             if key != 'created_at':
                                 entity[key] = created_entity[key]
                         self.save(entity)
 
-                        found_entity = True
-                        break
-
-                if not found_entity:
-                    self.save(created_entity)
-                    entities.append(created_entity)
-
-        return entities
-
-    def find_or_create_one(self, entity_type, query, property_cache, expiry_date, create_method, *create_args, **create_kwargs):
-        """Find or create a single entity of the specified type matching the specified query"""
-
-        entity = self.find_one(entity_type, query, property_cache)
-        if entity is None or (expiry_date is not None and entity['updated_at'] < expiry_date) or entity.has_expired:
-
-            values = create_method(*create_args, **create_kwargs)
-            if values is not None:
-
-                for key in query:
-                    values[key] = query[key]
-
-                created_entity = entity_type(self, property_cache, values)
-
-                if entity is None:
-                    self.save(created_entity)
-                    return created_entity
-
-                else:
-
-                    for key in created_entity:
-                        if key != 'created_at':
-                            entity[key] = created_entity[key]
-                    self.save(entity)
-
-        return entity
+            return entity
     
     def get_meets_by_date(self, date):
         """Get a list of meets occurring on the specified date"""
