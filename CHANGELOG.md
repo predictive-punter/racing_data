@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [Unreleased]
+## [1.0.0b1] - 2016-07-24
 
 ### Changed
 - Implement query locks to prevent duplicate data in multithreaded environments (from @justjasongreen)
@@ -47,7 +47,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Set up project (from @justjasongreen)
 
 
-[Unreleased]: https://github.com/justjasongreen/racing_data/compare/1.0.0a2...HEAD
+[1.0.0b1]: https://github.com/justjasongreen/racing_data/compare/1.0.0a2...1.0.0b1
 [1.0.0a2]: https://github.com/justjasongreen/racing_data/compare/1.0.0a1...1.0.0a2
 [1.0.0a1]: https://github.com/justjasongreen/racing_data/compare/1.0.0a0...1.0.0a1
 [1.0.0a0]: https://github.com/justjasongreen/racing_data/tree/1.0.0a0
