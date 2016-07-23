@@ -10,6 +10,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Create database indexes (from @justjasongreen)
 
+### Fixed
+- Entity.get_property_cache method no longer shares cache across instances (from @justjasongreen)
+
 
 ## [1.0.0a1] - 2016-07-22
 
