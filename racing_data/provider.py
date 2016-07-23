@@ -14,6 +14,46 @@ class Provider:
 
         self.local_timezone = local_timezone
 
+        self.create_database_indexes()
+
+    @property
+    def database_indexes(self):
+        """Return a dictionary of required database indexes for each entity type"""
+        
+        return {
+            Meet:           [
+                [('date', 1)]
+            ],
+            Race:           [
+                [('meet_id', 1)]
+            ],
+            Runner:         [
+                [('race_id', 1)]
+            ],
+            Horse:          [
+                [('url', 1)]
+            ],
+            Jockey:         [
+                [('url', 1)]
+            ],
+            Trainer:        [
+                [('url', 1)]
+            ],
+            Performance:    [
+                [('horse_url', 1)],
+                [('jockey_url', 1)]
+            ]
+        }
+
+    def create_database_indexes(self):
+        """Create required database indexes"""
+
+        for entity_type in self.database_indexes:
+            collection = self.get_database_collection(entity_type)
+
+            for index in self.database_indexes[entity_type]:
+                collection.create_index(index)
+
     def get_database_collection(self, entity_type):
         """Get the database collection for the specified entity type"""
 
