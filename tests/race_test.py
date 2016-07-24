@@ -11,3 +11,9 @@ def test_runners(race, runners):
     provider_ids = [runner['_id'] for runner in runners]
 
     assert property_ids == provider_ids
+
+
+def test_str(race):
+    """str(race) should return a human readable string representation of the race"""
+
+    assert str(race) == 'race {number} at {meet}'.format(number=race['number'], meet=race.meet)

@@ -3,6 +3,10 @@ from . import Entity
 
 class Race(Entity):
     """A race represents a collection of runners competing in a single event at a meet"""
+
+    def __str__(self):
+
+        return 'race {number} at {meet}'.format(number=self['number'], meet=self.meet)
     
     @property
     def has_expired(self):
