@@ -3,6 +3,10 @@ from . import Entity
 
 class Performance(Entity):
     """A performance represents the result of a completed run for a horse/jockey"""
+
+    def __str__(self):
+
+        return 'performance for {horse} at {track} on {date:%Y-%m-%d}'.format(horse=self.horse, track=self['track'], date=self['date'].astimezone(self.provider.local_timezone))
     
     @property
     def has_expired(self):

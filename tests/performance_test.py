@@ -1,3 +1,6 @@
+import tzlocal
+
+
 def test_horse(performance, horse):
     """The horse property should return the horse associated with the performance"""
 
@@ -8,3 +11,9 @@ def test_jockey(performance, jockey):
     """The jockey property should return the jockey associated with the performance"""
 
     assert performance.jockey['_id'] == jockey['_id']
+
+
+def test_str(performance):
+    """str(performance) should return a human readable string representation of the performance"""
+
+    assert str(performance) == 'performance for {horse} at {track} on {date:%Y-%m-%d}'.format(horse=performance.horse, track=performance['track'], date=performance['date'].astimezone(tzlocal.get_localzone()))
