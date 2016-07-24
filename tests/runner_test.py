@@ -16,6 +16,12 @@ def test_race(race, runner):
     assert runner.race['_id'] == race['_id']
 
 
+def test_str(runner):
+    """str(runner) should return a human readable string representation of the runner"""
+
+    assert str(runner) == 'runner #{number} in {race}'.format(number=runner['number'], race=runner.race)
+
+
 def test_trainer(trainer, runner):
     """The trainer property should return the trainer associated with the runner"""
 
