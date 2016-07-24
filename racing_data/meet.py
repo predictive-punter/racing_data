@@ -3,6 +3,10 @@ from . import Entity
 
 class Meet(Entity):
     """A meet represents a collection of races occurring at a given track on a given date"""
+
+    def __str__(self):
+
+        return '{track} on {date:%Y-%m-%d}'.format(track=self['track'], date=self['date'].astimezone(self.provider.local_timezone))
     
     @property
     def has_expired(self):
