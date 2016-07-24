@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Implement __str__ methods for all concrete entity types (from @justjasongreen)
+
 ### Fixed
 - Fixed Coveralls integration (from @justjasongreen)
 
