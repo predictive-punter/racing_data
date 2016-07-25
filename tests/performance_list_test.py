@@ -38,6 +38,14 @@ def test_fourth_pct(performance_list, performances):
     assert performance_list.fourth_pct == performance_list.fourths / performance_list.starts
 
 
+def test_momentums(performance_list, performances):
+    """The momentums property should return a tuple containing the minimum, maximum and average momentums for the performances in the list"""
+
+    momentums = [performance.momentum for performance in performances]
+
+    assert performance_list.momentums == (min(momentums), max(momentums), sum(momentums) / len(momentums))
+
+
 def test_places(performance_list, performances):
     """The places property should return the number of first, second and third placed performances in the list"""
 

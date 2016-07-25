@@ -32,6 +32,14 @@ class PerformanceList(list):
         return self.calculate_percentage(self.fourths)
 
     @property
+    def momentums(self):
+        """Return a tuple containing the minimum, maximum and average momentums for the performances in this list"""
+
+        momentums = [performance.momentum for performance in self if performance.momentum is not None]
+
+        return (min(momentums), max(momentums), sum(momentums) / len(momentums)) if len(momentums) > 0 else (None, None, None)
+
+    @property
     def places(self):
         """Return the number of first, second and third placed performances in this list"""
 
