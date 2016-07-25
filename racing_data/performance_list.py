@@ -12,3 +12,10 @@ class PerformanceList(list):
         """Return the number of winning performances in this list"""
 
         return len([performance for performance in self if performance['result'] == 1])
+
+    @property
+    def win_pct(self):
+        """Return the percentage of winning performances in this list"""
+
+        if self.starts > 0:
+            return self.wins / self.starts
