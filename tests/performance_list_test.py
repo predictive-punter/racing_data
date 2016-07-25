@@ -14,6 +14,18 @@ def count_results(performances, result):
     return len([performance for performance in performances if performance['result'] == result])
 
 
+def test_fourths(performance_list, performances):
+    """The fourths property should return the number of fourth placed performances in the list"""
+
+    assert performance_list.fourths == count_results(performances, 4)
+
+
+def test_fourth_pct(performance_list, performances):
+    """The fourth_pct property should return the percentage of fourth placed performances in the list"""
+
+    assert performance_list.fourth_pct == performance_list.fourths / performance_list.starts
+
+
 def test_seconds(performance_list, performances):
     """The seconds property should return the number of second placed performances in the list"""
 

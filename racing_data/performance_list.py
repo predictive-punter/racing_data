@@ -1,5 +1,17 @@
 class PerformanceList(list):
     """A performance list provides statistical analysis functionality for a list of performances"""
+
+    @property
+    def fourths(self):
+        """Return the number of fourth placed performances in this list"""
+
+        return self.count_results(4)
+
+    @property
+    def fourth_pct(self):
+        """Return the percentage of fourth placed performances in this list"""
+
+        return self.calculate_percentage(self.fourths)
     
     @property
     def seconds(self):
