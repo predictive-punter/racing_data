@@ -14,6 +14,12 @@ def count_results(performances, result):
     return len([performance for performance in performances if performance['result'] == result])
 
 
+def test_earnings(performance_list, performances):
+    """The earnings property should return the total prize money for the performances in the list"""
+
+    assert performance_list.earnings == sum([performance['prize_money'] for performance in performances])
+
+
 def test_fourths(performance_list, performances):
     """The fourths property should return the number of fourth placed performances in the list"""
 

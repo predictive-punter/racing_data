@@ -2,6 +2,16 @@ class PerformanceList(list):
     """A performance list provides statistical analysis functionality for a list of performances"""
 
     @property
+    def earnings(self):
+        """Return the total prize money for the performances in this list"""
+
+        prize_monies = [performance['prize_money'] for performance in self if performance['prize_money'] is not None]
+        if len(prize_monies) > 0:
+            return sum(prize_monies)
+        else:
+            return 0.00
+
+    @property
     def fourths(self):
         """Return the number of fourth placed performances in this list"""
 
