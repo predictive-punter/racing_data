@@ -106,6 +106,21 @@ class Runner(Entity):
         return self.get_cached_property('jockey', self.provider.get_jockey_by_runner, self)
 
     @property
+    def last_10(self):
+        """Return a PerformanceList containing the last 10 prior performances for the horse"""
+
+        def generate_last_10():
+            performance_list = PerformanceList()
+            for performance in self.career:
+                if len(performance_list) < 10:
+                    performance_list.append(performance)
+                else:
+                    break
+            return performance_list
+
+        return self.get_cached_property('last_10', generate_last_10)
+
+    @property
     def previous_performance(self):
         """Return the previous performance for the horse"""
 

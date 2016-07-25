@@ -76,6 +76,13 @@ def test_jockey(jockey, runner):
     assert runner.jockey['_id'] == jockey['_id']
 
 
+def test_last_10(runner):
+    """The last_10 property should return a PerformanceList containing the last 10 prior performances for the horse"""
+
+    assert isinstance(runner.last_10, racing_data.PerformanceList)
+    assert len(runner.last_10) == 6
+
+
 def test_race(race, runner):
     """The race property should return the race in which the runner competes"""
 
