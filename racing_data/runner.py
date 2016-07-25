@@ -155,6 +155,12 @@ class Runner(Entity):
         return self.get_cached_property('on_soft', self.get_performance_list_on_track_condition, 'SOFT')
 
     @property
+    def on_synthetic(self):
+        """Return a PerformanceList containing all prior performances for the horse on SYNTHETIC tracks"""
+
+        return self.get_cached_property('on_synthetic', self.get_performance_list_on_track_condition, 'SYNTHETIC')
+
+    @property
     def previous_performance(self):
         """Return the previous performance for the horse"""
 
