@@ -48,7 +48,7 @@ class Runner(Entity):
         """Return a PerformanceList containing all performances for the horse prior to the current race date"""
 
         def generate_career():
-            return PerformanceList([performance for performance in self.horse.performances if performance['date'] < self.race.meet['date']])
+            return PerformanceList(sorted([performance for performance in self.horse.performances if performance['date'] < self.race.meet['date']], key=lambda p: p['date'], reverse=True))
 
         return self.get_cached_property('career', generate_career)
 
@@ -88,6 +88,13 @@ class Runner(Entity):
         return self.get_cached_property('jockey', self.provider.get_jockey_by_runner, self)
 
     @property
+    def previous_performance(self):
+        """Return the previous performance for the horse"""
+
+        if len(self.career) > 0:
+            return self.career[0]
+
+    @property
     def race(self):
         """Return the race in which this runner is competing"""
 
@@ -99,6 +106,13 @@ class Runner(Entity):
         
         if self.current_performance is not None:
             return self.current_performance['result']
+
+    @property
+    def spell(self):
+        """Return the number of days since the horse's last run"""
+
+        if self.previous_performance is not None:
+            return (self.race.meet['date'] - self.previous_performance['date']).days
 
     @property
     def starting_price(self):
