@@ -69,3 +69,9 @@ def test_str(performance):
     """str(performance) should return a human readable string representation of the performance"""
 
     assert str(performance) == 'performance for {horse} at {track} on {date:%Y-%m-%d}'.format(horse=performance.horse, track=performance['track'], date=performance['date'].astimezone(tzlocal.get_localzone()))
+
+
+def test_up(performance):
+    """The up property should return the number of runs for the horse, including this one, since a spell of 90 days or more"""
+
+    assert performance.up == 3

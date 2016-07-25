@@ -81,6 +81,18 @@ class Performance(Entity):
         if self.previous_performance is not None:
             return (self['date'] - self.previous_performance['date']).days
 
+    @property
+    def up(self):
+        """Return the number of runs, including this one, since a spell of 90 days or more"""
+
+        if self.previous_performance is None:
+            return 1
+        else:
+            if self.spell >= 90:
+                return 1
+            else:
+                return self.previous_performance.up + 1
+
     def is_equivalent_to(self, other_performance):
         """This performance is equivalent to other_performance if both have the same horse_url, track and date"""
 
