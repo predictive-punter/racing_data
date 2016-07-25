@@ -90,6 +90,13 @@ def test_last_12_months(runner):
     assert len(runner.last_12_months) == 6
 
 
+def test_on_firm(runner):
+    """The on_firm property should return a PerformanceList containing all prior performances for the horse on FIRM tracks"""
+
+    assert isinstance(runner.on_firm, racing_data.PerformanceList)
+    assert len(runner.on_firm) == 0
+
+
 def test_race(race, runner):
     """The race property should return the race in which the runner competes"""
 

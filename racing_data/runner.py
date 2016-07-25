@@ -131,6 +131,15 @@ class Runner(Entity):
         return self.get_cached_property('last_12_months', generate_last_12_months)
 
     @property
+    def on_firm(self):
+        """Return a PerformanceList containing all prior performances for the horse on FIRM tracks"""
+
+        def generate_on_firm():
+            return PerformanceList([performance for performance in self.career if performance['track_condition'] is not None and 'FIRM' in performance['track_condition']])
+
+        return self.get_cached_property('on_firm', generate_on_firm)
+
+    @property
     def previous_performance(self):
         """Return the previous performance for the horse"""
 
