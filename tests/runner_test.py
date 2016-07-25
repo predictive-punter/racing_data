@@ -111,6 +111,13 @@ def test_on_heavy(runner):
     assert len(runner.on_heavy) == 1
 
 
+def test_on_soft(runner):
+    """The on_soft property should return a PerformanceList containing all prior performances for the horse on SOFT tracks"""
+
+    assert isinstance(runner.on_soft, racing_data.PerformanceList)
+    assert len(runner.on_soft) == 1
+
+
 def test_race(race, runner):
     """The race property should return the race in which the runner competes"""
 
