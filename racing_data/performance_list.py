@@ -8,6 +8,12 @@ class PerformanceList(list):
         return self.count_results(2)
 
     @property
+    def second_pct(self):
+        """Return the percentage of second placed performances in this list"""
+        
+        return self.calculate_percentage(self.seconds)
+
+    @property
     def starts(self):
         """Return the number of starts in this performance list"""
 
@@ -23,8 +29,18 @@ class PerformanceList(list):
     def win_pct(self):
         """Return the percentage of winning performances in this list"""
 
-        if self.starts > 0:
-            return self.wins / self.starts
+        return self.calculate_percentage(self.wins)
+
+    def calculate_percentage(self, numerator, denominator=None, divide_by_zero=None):
+        """Return numerator / denominator, or divide_by_zero if denominator is 0"""
+
+        if denominator is None:
+            denominator = self.starts
+
+        if denominator == 0:
+            return divide_by_zero
+        else:
+            return numerator / denominator
 
     def count_results(self, result):
         """Count the number of performances with the specified result in this list"""

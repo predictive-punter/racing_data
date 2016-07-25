@@ -20,6 +20,12 @@ def test_seconds(performance_list, performances):
     assert performance_list.seconds == count_results(performances, 2)
 
 
+def test_second_pct(performance_list, performances):
+    """The second_pct property should return the percentage of second placed performances in the list"""
+
+    assert performance_list.second_pct == performance_list.seconds / performance_list.starts
+
+
 def test_starts(performance_list, performances):
     """The starts property should return the number of performances in the list"""
 
@@ -33,6 +39,6 @@ def test_wins(performance_list, performances):
 
 
 def test_win_pct(performance_list, performances):
-    """The win_pct property should return the number of winning performances in the list"""
+    """The win_pct property should return the percentage of winning performances in the list"""
 
     assert performance_list.win_pct == performance_list.wins / performance_list.starts
