@@ -127,6 +127,18 @@ class Runner(Entity):
 
         return self.get_cached_property('trainer', self.provider.get_trainer_by_runner, self)
 
+    @property
+    def up(self):
+        """Return the number of races run by the horse, including this one, since its last spell of 90 days or more"""
+
+        if self.spell >= 90:
+            return 1
+        else:
+            if self.previous_performance is None:
+                return 1
+            else:
+                return self.previous_performance.up + 1
+
     def is_equivalent_to(self, other_runner):
         """This runner is equivalent to other_runner if both have the same race_id and number"""
 

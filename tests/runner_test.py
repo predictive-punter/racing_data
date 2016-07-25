@@ -96,3 +96,9 @@ def test_trainer(trainer, runner):
     """The trainer property should return the trainer associated with the runner"""
 
     assert runner.trainer['_id'] == trainer['_id']
+
+
+def test_up(runner):
+    """The up property should return the number of races run by the horse, including this one, since its last spell of 90 days or more"""
+
+    assert runner.up == 3
