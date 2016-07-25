@@ -1,4 +1,7 @@
+import math
+
 from . import Entity
+from .constants import *
 
 
 class Performance(Entity):
@@ -7,6 +10,12 @@ class Performance(Entity):
     def __str__(self):
 
         return 'performance for {horse} at {track} on {date:%Y-%m-%d}'.format(horse=self.horse, track=self['track'], date=self['date'].astimezone(self.provider.local_timezone))
+
+    @property
+    def actual_distance(self):
+        """Return the actual distance run by the horse in the winning time"""
+
+        return math.sqrt((self['distance'] ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2)) - (self['lengths'] * METRES_PER_LENGTH)
     
     @property
     def has_expired(self):

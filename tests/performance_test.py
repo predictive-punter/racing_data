@@ -1,4 +1,16 @@
+import math
+
 import tzlocal
+
+from racing_data.constants import BARRIER_WIDTH, METRES_PER_LENGTH
+
+
+def test_actual_distance(performance):
+    """The actual_distance property should return the actual distance run by the horse in the winning time"""
+
+    expected_value = math.sqrt((performance['distance'] ** 2) + ((performance['barrier'] * BARRIER_WIDTH) ** 2)) - (performance['lengths'] * METRES_PER_LENGTH)
+
+    assert performance.actual_distance == expected_value
 
 
 def test_horse(performance, horse):
