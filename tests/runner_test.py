@@ -1,6 +1,6 @@
 import math
 
-from racing_data.constants import BARRIER_WIDTH
+from racing_data.constants import BARRIER_WIDTH, HORSE_WEIGHT
 
 
 def test_actual_distance(runner):
@@ -22,6 +22,12 @@ def test_actual_distance(runner):
     actual_distance = math.sqrt((circ_distance ** 2) + ((runner['barrier'] * BARRIER_WIDTH) ** 2)) + straight_distance
 
     assert runner.actual_distance == actual_distance
+
+
+def test_actual_weight(runner):
+    """The actual_weight property should return the average racehorse weight plus the listed weight less allowances for the runner"""
+
+    assert runner.actual_weight == HORSE_WEIGHT + runner['weight'] - runner['jockey_claiming']
 
 
 def test_horse(horse, runner):

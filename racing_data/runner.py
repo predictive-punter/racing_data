@@ -29,6 +29,12 @@ class Runner(Entity):
                 circ_distance += self.race['track_circ']
 
         return math.sqrt((circ_distance ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2)) + straight_distance
+
+    @property
+    def actual_weight(self):
+        """Return the average racehorse weight plus the listed weight less allowances for this runner"""
+
+        return HORSE_WEIGHT + self['weight'] - self['jockey_claiming']
     
     @property
     def has_expired(self):
