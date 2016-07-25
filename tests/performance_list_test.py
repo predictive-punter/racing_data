@@ -50,6 +50,14 @@ def test_place_pct(performance_list, performances):
     assert performance_list.place_pct == performance_list.places / performance_list.starts
 
 
+def test_roi(performance_list, performances):
+    """The roi property should return the total profits divided by number of starts for the performances in the list"""
+
+    profits = [performance.profit for performance in performances]
+
+    assert performance_list.roi == sum(profits) / performance_list.starts
+
+
 def test_seconds(performance_list, performances):
     """The seconds property should return the number of second placed performances in the list"""
 
