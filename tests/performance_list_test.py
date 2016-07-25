@@ -50,6 +50,15 @@ def test_place_pct(performance_list, performances):
     assert performance_list.place_pct == performance_list.places / performance_list.starts
 
 
+def test_result_potential(performance_list, performances):
+    """The result_potential property should return 1 - the sum of all results / the sum of all starters for the performances in the list"""
+
+    results = [performance['result'] for performance in performances]
+    starters = [performance['starters'] for performance in performances]
+
+    assert performance_list.result_potential == 1.0 - (sum(results) / sum(starters))
+
+
 def test_roi(performance_list, performances):
     """The roi property should return the total profits divided by number of starts for the performances in the list"""
 

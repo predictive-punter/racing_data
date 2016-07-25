@@ -44,6 +44,21 @@ class PerformanceList(list):
         return self.calculate_percentage(self.places)
 
     @property
+    def result_potential(self):
+        """Return 1 - the sum of all results / the sum of all starters for the performances in this list"""
+
+        results = [performance['result'] for performance in self if performance['result'] is not None]
+        if len(results) > 0:
+
+            starters = [performance['starters'] for performance in self if performance['starters'] is not None]
+            if len(starters) > 0:
+
+                pct = self.calculate_percentage(sum(results), sum(starters))
+                if pct is not None:
+
+                    return 1.0 - pct
+
+    @property
     def roi(self):
         """Return the total profits divided by the number of starts in this list"""
 
