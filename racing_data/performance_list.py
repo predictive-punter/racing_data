@@ -20,6 +20,18 @@ class PerformanceList(list):
         return len(self)
 
     @property
+    def thirds(self):
+        """Return the number of third placed performances in this list"""
+
+        return self.count_results(3)
+
+    @property
+    def third_pct(self):
+        """Return the percentage of third placed performances in this list"""
+
+        return self.calculate_percentage(self.thirds)
+
+    @property
     def wins(self):
         """Return the number of winning performances in this list"""
 
