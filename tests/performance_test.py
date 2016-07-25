@@ -33,6 +33,16 @@ def test_jockey(performance, jockey):
     assert performance.jockey['_id'] == jockey['_id']
 
 
+def test_profit(performance):
+    """The profit property should return the profit earned on a win bet for this performance"""
+
+    expected_value = -1.0
+    if performance['result'] == 1:
+        expected_value += performance['starting_price']
+
+    assert performance.profit == expected_value
+
+
 def test_str(performance):
     """str(performance) should return a human readable string representation of the performance"""
 

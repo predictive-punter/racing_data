@@ -41,6 +41,16 @@ class Performance(Entity):
 
         return self.get_cached_property('jockey', self.provider.get_jockey_by_performance, self)
 
+    @property
+    def profit(self):
+        """Return the profit earned on a win bet for this performance"""
+
+        profit = -1.00
+        if self['result'] == 1:
+            profit += self['starting_price']
+
+        return profit
+
     def is_equivalent_to(self, other_performance):
         """This performance is equivalent to other_performance if both have the same horse_url, track and date"""
 
