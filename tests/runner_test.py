@@ -30,6 +30,12 @@ def test_actual_weight(runner):
     assert runner.actual_weight == HORSE_WEIGHT + runner['weight'] - runner['jockey_claiming']
 
 
+def test_age(runner):
+    """The age property should return the horse's age as at the date of the race"""
+
+    assert runner.age == (runner.race.meet['date'] - runner.horse['foaled']).days / 365
+
+
 def test_horse(horse, runner):
     """The horse property should return the horse associated with the runner"""
 
