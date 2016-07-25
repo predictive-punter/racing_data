@@ -1,6 +1,6 @@
 import math
 
-from . import Entity
+from . import Entity, PerformanceList
 from .constants import *
 
 
@@ -42,6 +42,15 @@ class Runner(Entity):
 
         if 'foaled' in self.horse:
             return (self.race.meet['date'] - self.horse['foaled']).days / 365
+
+    @property
+    def career(self):
+        """Return a PerformanceList containing all performances for the horse prior to the current race date"""
+
+        def generate_career():
+            return PerformanceList([performance for performance in self.horse.performances if performance['date'] < self.race.meet['date']])
+
+        return self.get_cached_property('career', generate_career)
 
     @property
     def carrying(self):

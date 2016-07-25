@@ -1,5 +1,6 @@
 import math
 
+import racing_data
 from racing_data.constants import BARRIER_WIDTH, HORSE_WEIGHT
 
 
@@ -34,6 +35,13 @@ def test_age(runner):
     """The age property should return the horse's age as at the date of the race"""
 
     assert runner.age == (runner.race.meet['date'] - runner.horse['foaled']).days / 365
+
+
+def test_career(runner):
+    """The career property should return a PerformanceList containing all performances for the horse prior to the current race date"""
+
+    assert isinstance(runner.career, racing_data.PerformanceList)
+    assert len(runner.career) == 6
 
 
 def test_carrying(runner):
