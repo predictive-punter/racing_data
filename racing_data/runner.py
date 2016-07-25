@@ -134,10 +134,13 @@ class Runner(Entity):
     def on_firm(self):
         """Return a PerformanceList containing all prior performances for the horse on FIRM tracks"""
 
-        def generate_on_firm():
-            return PerformanceList([performance for performance in self.career if performance['track_condition'] is not None and 'FIRM' in performance['track_condition']])
+        return self.get_cached_property('on_firm', self.get_performance_list_on_track_condition, 'FIRM')
 
-        return self.get_cached_property('on_firm', generate_on_firm)
+    @property
+    def on_good(self):
+        """Return a PerformanceList containing all prior performances for the horse on GOOD tracks"""
+
+        return self.get_cached_property('on_good', self.get_performance_list_on_track_condition, 'GOOD')
 
     @property
     def previous_performance(self):
@@ -190,6 +193,11 @@ class Runner(Entity):
                 return 1
             else:
                 return self.previous_performance.up + 1
+
+    def get_performance_list_on_track_condition(self, track_condition):
+        """Return a PerformanceList containing all prior past performances for the horse on the specified track condition"""
+
+        return PerformanceList([performance for performance in self.career if performance['track_condition'] is not None and track_condition.upper() in performance['track_condition']])
 
     def is_equivalent_to(self, other_runner):
         """This runner is equivalent to other_runner if both have the same race_id and number"""

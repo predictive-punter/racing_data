@@ -97,6 +97,13 @@ def test_on_firm(runner):
     assert len(runner.on_firm) == 0
 
 
+def test_on_good(runner):
+    """The on_good property should return a PerformanceList containing all prior performances for the horse on GOOD tracks"""
+
+    assert isinstance(runner.on_good, racing_data.PerformanceList)
+    assert len(runner.on_good) == 4
+
+
 def test_race(race, runner):
     """The race property should return the race in which the runner competes"""
 
