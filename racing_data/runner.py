@@ -1,3 +1,4 @@
+from datetime import timedelta
 import math
 
 from . import Entity, PerformanceList
@@ -119,6 +120,15 @@ class Runner(Entity):
             return performance_list
 
         return self.get_cached_property('last_10', generate_last_10)
+
+    @property
+    def last_12_months(self):
+        """Return a PerformanceList containing all prior performances for the horse in the last 12 months"""
+
+        def generate_last_12_months():
+            return PerformanceList([performance for performance in self.career if performance['date'] >= self.race.meet['date'] - timedelta(days=365)])
+
+        return self.get_cached_property('last_12_months', generate_last_12_months)
 
     @property
     def previous_performance(self):
