@@ -56,6 +56,14 @@ class PerformanceList(list):
         return self.calculate_percentage(self.seconds)
 
     @property
+    def starting_prices(self):
+        """Return a tuple containing the minimum, maximum and average starting prices for the performances in this list"""
+
+        starting_prices = [performance['starting_price'] for performance in self if performance['starting_price'] is not None]
+
+        return (min(starting_prices), max(starting_prices), sum(starting_prices) / len(starting_prices)) if len(starting_prices) > 0 else (None, None, None)
+
+    @property
     def starts(self):
         """Return the number of starts in this performance list"""
 

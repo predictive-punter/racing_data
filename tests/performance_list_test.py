@@ -62,6 +62,14 @@ def test_second_pct(performance_list, performances):
     assert performance_list.second_pct == performance_list.seconds / performance_list.starts
 
 
+def test_starting_prices(performance_list, performances):
+    """The starting_prices property should return a tuple of the minimum, maximum and average starting prices for the performances in the list"""
+
+    starting_prices = [performance['starting_price'] for performance in performances if performance['starting_price'] is not None]
+
+    assert performance_list.starting_prices == (min(starting_prices), max(starting_prices), sum(starting_prices) / len(starting_prices))
+
+
 def test_starts(performance_list, performances):
     """The starts property should return the number of performances in the list"""
 
