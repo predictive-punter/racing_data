@@ -8,4 +8,5 @@ from .horse import Horse
 from .jockey import Jockey
 from .trainer import Trainer
 from .performance import Performance
+from .performance_list import PerformanceList
 from .provider import Provider
