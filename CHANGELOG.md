@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [Unreleased]
+
+### Added
+- Implement calculated properties for Performance objects (from @justjasongreen)
+
+
 ## [1.0.0b2] - 2016-07-24
 
 ### Added
@@ -56,6 +62,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Set up project (from @justjasongreen)
 
 
+[Unreleased]: https://github.com/justjasongreen/racing_data/compare/1.0.0b2...HEAD
 [1.0.0b2]: https://github.com/justjasongreen/racing_data/compare/1.0.0b1...1.0.0b2
 [1.0.0b1]: https://github.com/justjasongreen/racing_data/compare/1.0.0a2...1.0.0b1
 [1.0.0a2]: https://github.com/justjasongreen/racing_data/compare/1.0.0a1...1.0.0a2
