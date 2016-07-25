@@ -34,13 +34,21 @@ def test_jockey(performance, jockey):
 
 
 def test_profit(performance):
-    """The profit property should return the profit earned on a win bet for this performance"""
+    """The profit property should return the profit earned on a win bet for the performance"""
 
     expected_value = -1.0
     if performance['result'] == 1:
         expected_value += performance['starting_price']
 
     assert performance.profit == expected_value
+
+
+def test_speed(performance):
+    """The speed property should returned the average speed of the horse for the performance"""
+
+    expected_value = performance.actual_distance / performance['winning_time']
+
+    assert performance.speed == expected_value
 
 
 def test_str(performance):

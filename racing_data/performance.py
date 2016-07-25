@@ -51,6 +51,12 @@ class Performance(Entity):
 
         return profit
 
+    @property
+    def speed(self):
+        """Return the average speed of the horse for this performance"""
+
+        return self.actual_distance / self['winning_time']
+
     def is_equivalent_to(self, other_performance):
         """This performance is equivalent to other_performance if both have the same horse_url, track and date"""
 
