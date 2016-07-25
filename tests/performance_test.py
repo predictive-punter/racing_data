@@ -33,6 +33,14 @@ def test_jockey(performance, jockey):
     assert performance.jockey['_id'] == jockey['_id']
 
 
+def test_momentum(performance):
+    """The momentum property should return the average momentum for the horse/jockey during the performance"""
+
+    expected_value = performance.actual_weight * performance.speed
+
+    assert performance.momentum == expected_value
+
+
 def test_profit(performance):
     """The profit property should return the profit earned on a win bet for the performance"""
 
@@ -44,7 +52,7 @@ def test_profit(performance):
 
 
 def test_speed(performance):
-    """The speed property should returned the average speed of the horse for the performance"""
+    """The speed property should returned the average speed of the horse/jockey during the performance"""
 
     expected_value = performance.actual_distance / performance['winning_time']
 

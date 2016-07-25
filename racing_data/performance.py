@@ -42,6 +42,12 @@ class Performance(Entity):
         return self.get_cached_property('jockey', self.provider.get_jockey_by_performance, self)
 
     @property
+    def momentum(self):
+        """Return the average momentum of the horse/jockey during this performance"""
+        
+        return self.actual_weight * self.speed
+
+    @property
     def profit(self):
         """Return the profit earned on a win bet for this performance"""
 
@@ -53,7 +59,7 @@ class Performance(Entity):
 
     @property
     def speed(self):
-        """Return the average speed of the horse for this performance"""
+        """Return the average speed of the horse/jockey for this performance"""
 
         return self.actual_distance / self['winning_time']
 
