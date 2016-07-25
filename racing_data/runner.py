@@ -48,6 +48,17 @@ class Runner(Entity):
         """Return this runner's listed weight less allowances"""
 
         return self['weight'] - self['jockey_claiming']
+
+    @property
+    def current_performance(self):
+        """Return the performance associated with this runner if the race has already been run"""
+
+        def get_current_performance():
+            for performance in self.horse.performances:
+                if performance['date'] == self.race.meet['date'] and performance['track'] == self.race.meet['track']:
+                    return performance
+
+        return self.get_cached_property('current_performance', get_current_performance)
     
     @property
     def has_expired(self):
@@ -72,6 +83,13 @@ class Runner(Entity):
         """Return the race in which this runner is competing"""
 
         return self.get_cached_property('race', self.provider.get_race_by_runner, self)
+
+    @property
+    def result(self):
+        """Return the final result for this runner if the race has already been run"""
+        
+        if self.current_performance is not None:
+            return self.current_performance['result']
 
     @property
     def trainer(self):

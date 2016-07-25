@@ -60,6 +60,12 @@ def test_race(race, runner):
     assert runner.race['_id'] == race['_id']
 
 
+def test_result(runner):
+    """The result property should return the runner's final result if the race has already been run"""
+
+    assert runner.result == 2
+
+
 def test_str(runner):
     """str(runner) should return a human readable string representation of the runner"""
 
