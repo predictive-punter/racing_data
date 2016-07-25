@@ -101,6 +101,13 @@ class Runner(Entity):
             return self.current_performance['result']
 
     @property
+    def starting_price(self):
+        """Return the starting price for this runner if the race has already been run"""
+
+        if self.current_performance is not None:
+            return self.current_performance['starting_price']
+
+    @property
     def trainer(self):
         """Return the trainer associated with this runner"""
 

@@ -74,6 +74,12 @@ def test_result(runner):
     assert runner.result == 2
 
 
+def test_starting_price(runner):
+    """The starting_price property should return the runner's starting price if the race has already been run"""
+
+    assert runner.starting_price == 4.00
+
+
 def test_str(runner):
     """str(runner) should return a human readable string representation of the runner"""
 
