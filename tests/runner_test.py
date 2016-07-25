@@ -37,6 +37,13 @@ def test_age(runner):
     assert runner.age == (runner.race.meet['date'] - runner.horse['foaled']).days / 365
 
 
+def test_at_distance(runner):
+    """The at_distance property should return a PerformanceList containing all prior performances within 100m of the current race"""
+
+    assert isinstance(runner.at_distance, racing_data.PerformanceList)
+    assert len(runner.at_distance) == 3
+
+
 def test_career(runner):
     """The career property should return a PerformanceList containing all performances for the horse prior to the current race date"""
 
