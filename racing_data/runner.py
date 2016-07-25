@@ -34,7 +34,7 @@ class Runner(Entity):
     def actual_weight(self):
         """Return the average racehorse weight plus the listed weight less allowances for this runner"""
 
-        return HORSE_WEIGHT + self['weight'] - self['jockey_claiming']
+        return HORSE_WEIGHT + self.carrying
 
     @property
     def age(self):
@@ -42,6 +42,12 @@ class Runner(Entity):
 
         if 'foaled' in self.horse:
             return (self.race.meet['date'] - self.horse['foaled']).days / 365
+
+    @property
+    def carrying(self):
+        """Return this runner's listed weight less allowances"""
+
+        return self['weight'] - self['jockey_claiming']
     
     @property
     def has_expired(self):

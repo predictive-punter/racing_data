@@ -27,13 +27,19 @@ def test_actual_distance(runner):
 def test_actual_weight(runner):
     """The actual_weight property should return the average racehorse weight plus the listed weight less allowances for the runner"""
 
-    assert runner.actual_weight == HORSE_WEIGHT + runner['weight'] - runner['jockey_claiming']
+    assert runner.actual_weight == HORSE_WEIGHT + runner.carrying
 
 
 def test_age(runner):
     """The age property should return the horse's age as at the date of the race"""
 
     assert runner.age == (runner.race.meet['date'] - runner.horse['foaled']).days / 365
+
+
+def test_carrying(runner):
+    """The carrying property should return the runner's listed weight less allowances"""
+
+    assert runner.carrying == runner['weight'] - runner['jockey_claiming']
 
 
 def test_horse(horse, runner):
