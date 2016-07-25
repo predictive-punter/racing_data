@@ -16,6 +16,12 @@ class Performance(Entity):
         """Return the actual distance run by the horse in the winning time"""
 
         return math.sqrt((self['distance'] ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2)) - (self['lengths'] * METRES_PER_LENGTH)
+
+    @property
+    def actual_weight(self):
+        """Return the total combined weight of the horse and jockey"""
+
+        return self['carried'] + HORSE_WEIGHT
     
     @property
     def has_expired(self):
