@@ -26,6 +26,18 @@ def test_fourth_pct(performance_list, performances):
     assert performance_list.fourth_pct == performance_list.fourths / performance_list.starts
 
 
+def test_places(performance_list, performances):
+    """The places property should return the number of first, second and third placed performances in the list"""
+
+    assert performance_list.places == performance_list.wins + performance_list.seconds + performance_list.thirds
+
+
+def test_place_pct(performance_list, performances):
+    """The place_pct property should return the percentage of first, second and third placed performances in the list"""
+
+    assert performance_list.place_pct == performance_list.places / performance_list.starts
+
+
 def test_seconds(performance_list, performances):
     """The seconds property should return the number of second placed performances in the list"""
 

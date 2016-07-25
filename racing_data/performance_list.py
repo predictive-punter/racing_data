@@ -12,7 +12,19 @@ class PerformanceList(list):
         """Return the percentage of fourth placed performances in this list"""
 
         return self.calculate_percentage(self.fourths)
-    
+
+    @property
+    def places(self):
+        """Return the number of first, second and third placed performances in this list"""
+
+        return self.wins + self.seconds + self.thirds
+
+    @property
+    def place_pct(self):
+        """Return the percentage of first, second and third placed performances in this list"""
+
+        return self.calculate_percentage(self.places)
+
     @property
     def seconds(self):
         """Return the number of second placed performances in this list"""
