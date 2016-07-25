@@ -1,3 +1,29 @@
+import math
+
+from racing_data.constants import BARRIER_WIDTH
+
+
+def test_actual_distance(runner):
+    """The actual_distance property should return the actual distance run by the horse"""
+
+    circ_distance = straight_distance = 0
+    while circ_distance + straight_distance < runner.race['distance']:
+
+        if runner.race['distance'] - circ_distance - straight_distance < runner.race['track_straight']:
+            straight_distance += runner.race['distance'] - circ_distance - straight_distance
+        else:
+            straight_distance += runner.race['track_straight']
+
+        if runner.race['distance'] - circ_distance - straight_distance < runner.race['track_circ']:
+            circ_distance += runner.race['distance'] - circ_distance - straight_distance
+        else:
+            circ_distance += runner.race['track_circ']
+
+    actual_distance = math.sqrt((circ_distance ** 2) + ((runner['barrier'] * BARRIER_WIDTH) ** 2)) + straight_distance
+
+    assert runner.actual_distance == actual_distance
+
+
 def test_horse(horse, runner):
     """The horse property should return the horse associated with the runner"""
 

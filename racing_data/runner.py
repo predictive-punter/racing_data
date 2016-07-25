@@ -1,4 +1,7 @@
+import math
+
 from . import Entity
+from .constants import *
 
 
 class Runner(Entity):
@@ -7,6 +10,25 @@ class Runner(Entity):
     def __str__(self):
 
         return 'runner #{number} in {race}'.format(number=self['number'], race=self.race)
+
+    @property
+    def actual_distance(self):
+        """Return the race distance adjusted for this runner's barrier and the race's track circ/straight values"""
+
+        circ_distance = straight_distance = 0
+        while circ_distance + straight_distance < self.race['distance']:
+
+            if self.race['distance'] - circ_distance - straight_distance < self.race['track_straight']:
+                straight_distance += self.race['distance'] - circ_distance - straight_distance
+            else:
+                straight_distance += self.race['track_straight']
+
+            if self.race['distance'] - circ_distance - straight_distance < self.race['track_circ']:
+                circ_distance += self.race['distance'] - circ_distance - straight_distance
+            else:
+                circ_distance += self.race['track_circ']
+
+        return math.sqrt((circ_distance ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2)) + straight_distance
     
     @property
     def has_expired(self):
