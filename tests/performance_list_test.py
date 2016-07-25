@@ -20,6 +20,12 @@ def test_earnings(performance_list, performances):
     assert performance_list.earnings == sum([performance['prize_money'] for performance in performances])
 
 
+def test_earnings_potential(performance_list, performances):
+    """The earnings_potential property should return the earnings / the total prize pools for the performances in the list"""
+
+    assert performance_list.earnings_potential == performance_list.earnings / sum([performance['prize_pool'] for performance in performances])
+
+
 def test_fourths(performance_list, performances):
     """The fourths property should return the number of fourth placed performances in the list"""
 

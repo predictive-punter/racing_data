@@ -12,6 +12,14 @@ class PerformanceList(list):
             return 0.00
 
     @property
+    def earnings_potential(self):
+        """Return the total prize money as a percentage of the total prize pools for the performances in this list"""
+
+        prize_pools = [performance['prize_pool'] for performance in self if performance['prize_pool'] is not None]
+        if len(prize_pools) > 0:
+            return self.calculate_percentage(self.earnings, sum(prize_pools))
+
+    @property
     def fourths(self):
         """Return the number of fourth placed performances in this list"""
 
