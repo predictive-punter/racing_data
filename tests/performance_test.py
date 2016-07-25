@@ -59,6 +59,12 @@ def test_speed(performance):
     assert performance.speed == expected_value
 
 
+def test_spell(performance):
+    """The spell property should return the number of days since the horse's previous performance"""
+
+    assert performance.spell == 11
+
+
 def test_str(performance):
     """str(performance) should return a human readable string representation of the performance"""
 

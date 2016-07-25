@@ -48,6 +48,17 @@ class Performance(Entity):
         return self.actual_weight * self.speed
 
     @property
+    def previous_performance(self):
+        """Return the previous performance for the horse"""
+
+        def get_previous_performance():
+            previous_performances = [performance for performance in self.horse.performances if performance['date'] < self['date']]
+            if len(previous_performances) > 0:
+                return sorted(previous_performances, key=lambda p: p['date'], reverse=True)[0]
+
+        return self.get_cached_property('previous_performance', get_previous_performance)
+
+    @property
     def profit(self):
         """Return the profit earned on a win bet for this performance"""
 
@@ -62,6 +73,13 @@ class Performance(Entity):
         """Return the average speed of the horse/jockey for this performance"""
 
         return self.actual_distance / self['winning_time']
+
+    @property
+    def spell(self):
+        """Return the number of days since the horse's previous performance"""
+
+        if self.previous_performance is not None:
+            return (self['date'] - self.previous_performance['date']).days
 
     def is_equivalent_to(self, other_performance):
         """This performance is equivalent to other_performance if both have the same horse_url, track and date"""
