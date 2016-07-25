@@ -143,6 +143,12 @@ class Runner(Entity):
         return self.get_cached_property('on_good', self.get_performance_list_on_track_condition, 'GOOD')
 
     @property
+    def on_heavy(self):
+        """Return a PerformanceList containing all prior performances for the horse on HEAVY tracks"""
+
+        return self.get_cached_property('on_heavy', self.get_performance_list_on_track_condition, 'HEAVY')
+
+    @property
     def previous_performance(self):
         """Return the previous performance for the horse"""
 
