@@ -10,6 +10,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Implement calculated properties for Performance objects (from @justjasongreen)
 - Implement performance lists via the PerformanceList class (from @justjasongreen)
+- Implement calculated properties for Runner objects (from @justjasongreen)
+
+### Changed
+- Remove flake8 checks due to broken Travis CI integration (from @justjasongreen)
 
 
 ## [1.0.0b2] - 2016-07-24
