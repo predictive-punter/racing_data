@@ -23,7 +23,7 @@ class Provider:
     @property
     def database_indexes(self):
         """Return a dictionary of required database indexes for each entity type"""
-        
+
         return {
             Meet:           [
                 [('date', 1)]
@@ -155,7 +155,7 @@ class Provider:
                         self.save(entity)
 
             return entity
-    
+
     def get_meets_by_date(self, date):
         """Get a list of meets occurring on the specified date"""
 

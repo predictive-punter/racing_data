@@ -7,7 +7,7 @@ class Jockey(Entity):
     def __str__(self):
 
         return 'jockey {name}'.format(name=self['name'])
-    
+
     @property
     def performances(self):
         """Return a list of performances associated with this jockey"""

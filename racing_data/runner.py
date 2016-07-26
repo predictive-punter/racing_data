@@ -2,7 +2,7 @@ from datetime import timedelta
 import math
 
 from . import Entity, PerformanceList
-from .constants import *
+from .constants import BARRIER_WIDTH, HORSE_WEIGHT
 
 
 class Runner(Entity):
@@ -96,7 +96,7 @@ class Runner(Entity):
                     return performance
 
         return self.get_cached_property('current_performance', get_current_performance)
-    
+
     @property
     def has_expired(self):
         """Expire runners that were last updated prior to the start time of the associated race"""
@@ -203,7 +203,7 @@ class Runner(Entity):
     @property
     def result(self):
         """Return the final result for this runner if the race has already been run"""
-        
+
         if self.current_performance is not None:
             return self.current_performance['result']
 

@@ -7,7 +7,7 @@ class Meet(Entity):
     def __str__(self):
 
         return '{track} on {date:%Y-%m-%d}'.format(track=self['track'], date=self['date'].astimezone(self.provider.local_timezone))
-    
+
     @property
     def has_expired(self):
         """Expire meets that were last updated prior to their actual date"""

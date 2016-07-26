@@ -1,7 +1,7 @@
 import math
 
 from . import Entity
-from .constants import *
+from .constants import BARRIER_WIDTH, HORSE_WEIGHT, METRES_PER_LENGTH
 
 
 class Performance(Entity):
@@ -22,7 +22,7 @@ class Performance(Entity):
         """Return the total combined weight of the horse and jockey"""
 
         return self['carried'] + HORSE_WEIGHT
-    
+
     @property
     def has_expired(self):
         """Expire runners that were last updated prior to the start time of the associated race"""
@@ -44,7 +44,7 @@ class Performance(Entity):
     @property
     def momentum(self):
         """Return the average momentum of the horse/jockey during this performance"""
-        
+
         return self.actual_weight * self.speed
 
     @property

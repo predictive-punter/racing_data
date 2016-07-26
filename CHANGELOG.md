@@ -12,6 +12,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Implement performance lists via the PerformanceList class (from @justjasongreen)
 - Implement calculated properties for Runner objects (from @justjasongreen)
 
+### Changed
+- Use flake8 instead of pytest-flake8 (from @justjasongreen)
+
 
 ## [1.0.0b2] - 2016-07-24
 
