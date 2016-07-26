@@ -131,6 +131,108 @@ In addition to the dictionary values, Runner objects also provide a 'race' prope
 
     >>> race = runner.race
 
+Furthermore, Runner objects also offer the following calculated values as properties that can be accessed using dot-notation:
+
++-------------------+---------------------------------------------------------------------------------------------------+
+| Property          | Description                                                                                       |
++===================+===================================================================================================+
+| actual_distance   | The race distance adjusted for the runner's barrier and race track circ/straight values           |
++-------------------+---------------------------------------------------------------------------------------------------+
+| actual_weight     | The average weight of a racehorse plus the actual weight being carried by the horse               |
++-------------------+---------------------------------------------------------------------------------------------------+
+| age               | The age of the horse as at the date of the race                                                   |
++-------------------+---------------------------------------------------------------------------------------------------+
+| carrying          | The weight being carried by the horse after allowances                                            |
++-------------------+---------------------------------------------------------------------------------------------------+
+| result            | The final result for the runner (if the race has already been run)                                |
++-------------------+---------------------------------------------------------------------------------------------------+
+| spell             | The number of days since the horse's previous race                                                |
++-------------------+---------------------------------------------------------------------------------------------------+
+| starting_price    | The starting price for the runner (if the race has already been run)                              |
++-------------------+---------------------------------------------------------------------------------------------------+
+| up                | The number of races run by the horse (including this one) since a rest period of 90 days or more  |
++-------------------+---------------------------------------------------------------------------------------------------+
+
+In addition to the properties listed above, Runner objects also offer the following performance lists (see below) as properties that can also be accessed using dot-notation:
+
++-----------------------+---------------------------------------------------------------------------------------------------+
+| Property              | Description                                                                                       |
++=======================+===================================================================================================+
+| at_distance           | All prior performances for the horse within 100m of the current race distance                     |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| at_distance_on_track  | All prior performances for the horse within 100m of the current race distance on the same track   |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| at_up                 | All prior performances for the horse with the same UP number as the current run                   |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| career                | All performances for the horse prior to the current race date                                     |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| last_10               | The last 10 performances for the horse prior to the current race                                  |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| last_12_months        | All performances for the horse within 12 months prior to the current race date                    |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| on_firm               | All prior performances for the horse on FIRM tracks                                               |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| on_good               | All prior performances for the horse on GOOD tracks                                               |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| on_heavy              | All prior performances for the horse on HEAVY tracks                                              |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| on_soft               | All prior performances for the horse on SOFT tracks                                               |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| on_synthetic          | All prior performances for the horse on SYNTHETIC tracks                                          |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| on_track              | All prior performances for the horse on the same track as the current race                        |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| on_turf               | All prior performances for the horse on turf tracks (that is, NOT synthetic tracks)               |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| since_rest            | All prior performances for the horse since its last rest period of 90 days or more                |
++-----------------------+---------------------------------------------------------------------------------------------------+
+| with_jockey           | All prior performances for the horse with the same jockey                                         |
++-----------------------+---------------------------------------------------------------------------------------------------+
+
+
+Performance Lists
+-----------------
+
+The performance list properties described above return PerformanceList objects. The PerformanceList class is derived from Python's built-in list type, allowing easy access to the individual performances contained in the list. In addition to the built-in list functionality, PerformanceList objects also offer the following calculated values as properties that can be accessed via dot-notation:
+
++-----------------------+-----------------------------------------------------------------------------------------------+
+| Property              | Description                                                                                   |
++=======================+===============================================================================================+
+| earnings              | The total amount earned by the horse and connections in the list                              |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| earnings_potential    | The total earnings as a percentage of the total prize pools in the list                       |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| fourths               | The number of fourth placed performances in the list                                          |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| fourth_pct            | The percentage of fourth placed performances in the list                                      |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| momentums             | Returns a tuple containing minimum, maximum and average momentum for the list                 |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| places                | The number of placing (first/second/third) performances in the list                           |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| place_pct             | The percentage of placing (first/second/third) performances in the list                       |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| result_potential      | Returns 1.0 - (the sum of all results / the sum of all starters) in the list                  |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| roi                   | The total return on investment if a $1 WIN bet were placed on all performances in the list    |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| seconds               | The number of second placed performances in the list                                          |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| second_pct            | The percentage of second placed performances in the list                                      |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| starting_prices       | Returns a tuple containing minimum, maximum and average starting prices for the list          |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| starts                | The total number of starts in the list                                                        |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| thirds                | The total number of third placed performances in the list                                     |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| third_pct             | The percentage of third placed performances in the list                                       |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| wins                  | The total number of winning performances in the list                                          |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| win_pct               | The percentage of winning performances in the list                                            |
++-----------------------+-----------------------------------------------------------------------------------------------+
+
 
 Getting Horses, Jockeys and Trainers
 ====================================
@@ -165,7 +267,29 @@ In addition to the dictionary values, Performance objects also provide 'horse' a
     >>> horse = performance.horse
     >>> jockey = performance.jockey
 
-NOTE: Jockey objects also provide a 'performances' property that can be used to access a list of performances associated with that jockey. Unlike the Horse.performances property though, the Jockey.performances property will not scrape the web in search of relevant data. Instead, the Jockey.performances property will only return relevant performances that already exist in the database. This is due to the vast number of past performances associated with any given jockey, and the inherent difficulty in scraping such a vast amount of data in a timely fashion from most data providers.
+Furthermore, Performance objects also offer the following calculated values as properties that can be accessed using dot-notation:
+
++-------------------+---------------------------------------------------------------------------------------------------+
+| Property          | Description                                                                                       |
++===================+===================================================================================================+
+| actual_distance   | The actual distance covered by the horse in the winning time                                      |
++-------------------+---------------------------------------------------------------------------------------------------+
+| actual_weight     | The average weight of a racehorse plus the actual weight being carried by the horse               |
++-------------------+---------------------------------------------------------------------------------------------------+
+| momentum          | The average momentum achieved by the horse/jockey during the run                                  |
++-------------------+---------------------------------------------------------------------------------------------------+
+| profit            | The profit/loss on a $1 bet on this performance                                                   |
++-------------------+---------------------------------------------------------------------------------------------------+
+| result            | The final result for the runner (if the race has already been run)                                |
++-------------------+---------------------------------------------------------------------------------------------------+
+| speed             | The average speed achieved by the horse/jockey during the run                                     |
++-------------------+---------------------------------------------------------------------------------------------------+
+| spell             | The number of days since the horse's previous race                                                |
++-------------------+---------------------------------------------------------------------------------------------------+
+| up                | The number of races run by the horse (including this one) since a rest period of 90 days or more  |
++-------------------+---------------------------------------------------------------------------------------------------+
+
+(NOTE: Jockey objects also provide a 'performances' property that can be used to access a list of performances associated with that jockey. Unlike the Horse.performances property though, the Jockey.performances property will not scrape the web in search of relevant data. Instead, the Jockey.performances property will only return relevant performances that already exist in the database. This is due to the vast number of past performances associated with any given jockey, and the inherent difficulty in scraping such a vast amount of data in a timely fashion from most data providers.)
 
 
 ***********************
