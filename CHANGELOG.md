@@ -13,7 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Implement calculated properties for Runner objects (from @justjasongreen)
 
 ### Changed
-- Remove flake8 checks due to broken Travis CI integration (from @justjasongreen)
+- Use flake8 instead of pytest-flake8 (from @justjasongreen)
 
 
 ## [1.0.0b2] - 2016-07-24

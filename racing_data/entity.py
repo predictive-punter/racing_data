@@ -5,7 +5,7 @@ import pytz
 
 class Entity(dict):
     """Common functionality for racing entities"""
-    
+
     def __init__(self, provider, property_cache, *args, **kwargs):
 
         super(Entity, self).__init__(*args, **kwargs)
@@ -13,7 +13,7 @@ class Entity(dict):
         self.provider = provider
         self.property_cache = dict(**property_cache) if property_cache is not None else dict()
 
-        if not 'created_at' in self:
+        if 'created_at' not in self:
             self['created_at'] = self['updated_at'] = datetime.now(pytz.utc)
 
         for key in self:

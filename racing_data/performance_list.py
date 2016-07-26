@@ -78,13 +78,13 @@ class PerformanceList(list):
     @property
     def seconds(self):
         """Return the number of second placed performances in this list"""
-        
+
         return self.count_results(2)
 
     @property
     def second_pct(self):
         """Return the percentage of second placed performances in this list"""
-        
+
         return self.calculate_percentage(self.seconds)
 
     @property

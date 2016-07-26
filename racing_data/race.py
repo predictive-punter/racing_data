@@ -7,7 +7,7 @@ class Race(Entity):
     def __str__(self):
 
         return 'race {number} at {meet}'.format(number=self['number'], meet=self.meet)
-    
+
     @property
     def has_expired(self):
         """Expire races that were last updated prior to their start time"""
