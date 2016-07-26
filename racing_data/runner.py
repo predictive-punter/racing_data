@@ -199,6 +199,21 @@ class Runner(Entity):
             return self.current_performance['result']
 
     @property
+    def since_rest(self):
+        """Return a PerformanceList containing all prior performances for the horse since its last spell of 90 days or more"""
+
+        def generate_since_rest():
+            performances = []
+            if self.spell is not None and self.spell < 90:
+                for performance in self.career:
+                    performances.append(performance)
+                    if performance.spell >= 90:
+                        break
+            return PerformanceList(performances)
+
+        return self.get_cached_property('since_rest', generate_since_rest)
+
+    @property
     def spell(self):
         """Return the number of days since the horse's last run"""
 

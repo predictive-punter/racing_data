@@ -151,6 +151,13 @@ def test_result(runner):
     assert runner.result == 2
 
 
+def test_since_rest(runner):
+    """The since_rest property should return a PerformanceList containing all prior performances for the horse since its last spell of 90 days or more"""
+
+    assert isinstance(runner.since_rest, racing_data.PerformanceList)
+    assert len(runner.since_rest) == 2
+
+
 def test_spell(runner):
     """The spell property should return the number of days since the horse's previous race"""
 
