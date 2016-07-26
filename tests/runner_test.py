@@ -186,3 +186,10 @@ def test_up(runner):
     """The up property should return the number of races run by the horse, including this one, since its last spell of 90 days or more"""
 
     assert runner.up == 3
+
+
+def test_with_jockey(runner):
+    """The with_jockey property should return a PerformanceList containing all prior performances for the horse with the same jockey"""
+
+    assert isinstance(runner.with_jockey, racing_data.PerformanceList)
+    assert len(runner.with_jockey) == 1

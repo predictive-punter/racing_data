@@ -245,6 +245,15 @@ class Runner(Entity):
             else:
                 return self.previous_performance.up + 1
 
+    @property
+    def with_jockey(self):
+        """Return a PerformanceList containing all prior performances for the horse with the same jockey"""
+
+        def generate_with_jockey():
+            return PerformanceList([performance for performance in self.career if performance['jockey_url'] == self['jockey_url']])
+
+        return self.get_cached_property('with_jockey', generate_with_jockey)
+
     def get_performance_list_on_track_condition(self, track_condition):
         """Return a PerformanceList containing all prior past performances for the horse on the specified track condition"""
 
