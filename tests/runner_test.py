@@ -44,6 +44,13 @@ def test_at_distance(runner):
     assert len(runner.at_distance) == 3
 
 
+def test_at_distance_on_track(runner):
+    """The at_distance_on_track property should return a PerformanceList containing all prior performances for the horse on the same track and within 100m of the current race"""
+
+    assert isinstance(runner.at_distance_on_track, racing_data.PerformanceList)
+    assert len(runner.at_distance_on_track) == 0
+
+
 def test_at_up(runner):
     """The at_up property should return a PerformanceList containing all prior performances with the same UP number as the current run"""
 

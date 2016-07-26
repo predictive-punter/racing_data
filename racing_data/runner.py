@@ -54,6 +54,15 @@ class Runner(Entity):
         return self.get_cached_property('at_distance', generate_at_distance)
 
     @property
+    def at_distance_on_track(self):
+        """Return a PerformanceList containing all prior performances for the horse within 100m of the current race distance and on the same track"""
+
+        def generate_at_distance_on_track():
+            return PerformanceList([performance for performance in self.at_distance if performance in self.on_track])
+
+        return self.get_cached_property('at_distance_on_track', generate_at_distance_on_track)
+
+    @property
     def at_up(self):
         """Return a PerformanceList containing all prior performances for the horse with the same UP number as the current run"""
 
