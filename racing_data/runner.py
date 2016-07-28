@@ -2,7 +2,7 @@ from datetime import timedelta
 import math
 
 from . import Entity, PerformanceList
-from .constants import BARRIER_WIDTH, HORSE_WEIGHT
+from .constants import ALTERNATIVE_TRACK_NAMES, BARRIER_WIDTH, HORSE_WEIGHT
 
 
 class Runner(Entity):
@@ -173,8 +173,14 @@ class Runner(Entity):
     def on_track(self):
         """Return a PerformanceList containing all prior performances for the horse on the current track"""
 
+        def get_track_names():
+            for track_names in ALTERNATIVE_TRACK_NAMES:
+                if self.race.meet['track'] in track_names:
+                    return track_names
+            return [self.race.meet['track']]
+
         def generate_on_track():
-            return PerformanceList([performance for performance in self.career if performance['track'] == self.race.meet['track']])
+            return PerformanceList([performance for performance in self.career if performance['track'] in get_track_names()])
 
         return self.get_cached_property('on_track', generate_on_track)
 
