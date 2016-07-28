@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [Unreleased]
+## [1.0.0b4] - 2016-07-28
 
 ### Added
 - constants.ALTERNATIVE_TRACK_NAMES (from @justjasongreen)
@@ -76,7 +76,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Set up project (from @justjasongreen)
 
 
-[Unreleased]: https://github.com/justjasongreen/racing_data/compare/1.0.0b3...HEAD
+[1.0.0b4]: https://github.com/justjasongreen/racing_data/compare/1.0.0b3...1.0.0b4
 [1.0.0b3]: https://github.com/justjasongreen/racing_data/compare/1.0.0b2...1.0.0b3
 [1.0.0b2]: https://github.com/justjasongreen/racing_data/compare/1.0.0b1...1.0.0b2
 [1.0.0b1]: https://github.com/justjasongreen/racing_data/compare/1.0.0a2...1.0.0b1
