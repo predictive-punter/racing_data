@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [1.0.0b8] - 2016-07-29
+
+### Fixed
+- Fix ZeroDivisionError in Performance.speed (from @justjasongreen)
+
+
 ## [1.0.0b7] - 2016-07-29
 
 ### Fixed
@@ -94,6 +100,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Set up project (from @justjasongreen)
 
 
+[1.0.0b8]: https://github.com/justjasongreen/racing_data/compare/1.0.0b7...1.0.0b8
 [1.0.0b7]: https://github.com/justjasongreen/racing_data/compare/1.0.0b6...1.0.0b7
 [1.0.0b6]: https://github.com/justjasongreen/racing_data/compare/1.0.0b5...1.0.0b6
 [1.0.0b5]: https://github.com/justjasongreen/racing_data/compare/1.0.0b4...1.0.0b5
