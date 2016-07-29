@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [1.0.0b5] - 2016-07-29
+
+### Fixed
+- Check for None values in Runner/Performance/PerformanceList calculations (from @justjasongreen)
+
+
 ## [1.0.0b4] - 2016-07-28
 
 ### Added
@@ -76,6 +82,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Set up project (from @justjasongreen)
 
 
+[1.0.0b5]: https://github.com/justjasongreen/racing_data/compare/1.0.0b4...1.0.0b5
 [1.0.0b4]: https://github.com/justjasongreen/racing_data/compare/1.0.0b3...1.0.0b4
 [1.0.0b3]: https://github.com/justjasongreen/racing_data/compare/1.0.0b2...1.0.0b3
 [1.0.0b2]: https://github.com/justjasongreen/racing_data/compare/1.0.0b1...1.0.0b2

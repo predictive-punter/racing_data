@@ -15,7 +15,8 @@ class Performance(Entity):
     def actual_distance(self):
         """Return the actual distance run by the horse in the winning time"""
 
-        return math.sqrt((self['distance'] ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2)) - (self['lengths'] * METRES_PER_LENGTH)
+        if self['distance'] is not None:
+            return math.sqrt((self['distance'] ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2)) - (self['lengths'] * METRES_PER_LENGTH)
 
     @property
     def actual_weight(self):
@@ -45,7 +46,8 @@ class Performance(Entity):
     def momentum(self):
         """Return the average momentum of the horse/jockey during this performance"""
 
-        return self.actual_weight * self.speed
+        if self.speed is not None:
+            return self.actual_weight * self.speed
 
     @property
     def previous_performance(self):
@@ -64,7 +66,10 @@ class Performance(Entity):
 
         profit = -1.00
         if self['result'] == 1:
-            profit += self['starting_price']
+            if self['starting_price'] is None:
+                profit = 0.00
+            else:
+                profit += self['starting_price']
 
         return profit
 
@@ -72,7 +77,8 @@ class Performance(Entity):
     def speed(self):
         """Return the average speed of the horse/jockey for this performance"""
 
-        return self.actual_distance / self['winning_time']
+        if self.actual_distance is not None and self['winning_time'] is not None:
+            return self.actual_distance / self['winning_time']
 
     @property
     def spell(self):
@@ -85,13 +91,12 @@ class Performance(Entity):
     def up(self):
         """Return the number of runs, including this one, since a spell of 90 days or more"""
 
-        if self.previous_performance is None:
+        if self.spell is None or self.spell >= 90:
+            return 1
+        elif self.previous_performance is None:
             return 1
         else:
-            if self.spell >= 90:
-                return 1
-            else:
-                return self.previous_performance.up + 1
+            return self.previous_performance.up + 1
 
     def is_equivalent_to(self, other_performance):
         """This performance is equivalent to other_performance if both have the same horse_url, track and date"""
