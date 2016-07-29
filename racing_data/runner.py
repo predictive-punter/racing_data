@@ -16,26 +16,34 @@ class Runner(Entity):
     def actual_distance(self):
         """Return the race distance adjusted for this runner's barrier and the race's track circ/straight values"""
 
-        if self.race['track_circ'] is None or self.race['track_straight'] is None:
+        if self.race['distance'] is not None:
 
-            return math.sqrt((self.race['distance'] ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2))
+            if self['barrier'] is None:
 
-        else:
+                return self.race['distance']
 
-            circ_distance = straight_distance = 0
-            while circ_distance + straight_distance < self.race['distance']:
+            else:
 
-                if self.race['distance'] - circ_distance - straight_distance < self.race['track_straight']:
-                    straight_distance += self.race['distance'] - circ_distance - straight_distance
+                if self.race['track_circ'] is None or self.race['track_straight'] is None:
+
+                    return math.sqrt((self.race['distance'] ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2))
+
                 else:
-                    straight_distance += self.race['track_straight']
 
-                if self.race['distance'] - circ_distance - straight_distance < self.race['track_circ']:
-                    circ_distance += self.race['distance'] - circ_distance - straight_distance
-                else:
-                    circ_distance += self.race['track_circ']
+                    circ_distance = straight_distance = 0
+                    while circ_distance + straight_distance < self.race['distance']:
 
-            return math.sqrt((circ_distance ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2)) + straight_distance
+                        if self.race['distance'] - circ_distance - straight_distance < self.race['track_straight']:
+                            straight_distance += self.race['distance'] - circ_distance - straight_distance
+                        else:
+                            straight_distance += self.race['track_straight']
+
+                        if self.race['distance'] - circ_distance - straight_distance < self.race['track_circ']:
+                            circ_distance += self.race['distance'] - circ_distance - straight_distance
+                        else:
+                            circ_distance += self.race['track_circ']
+
+                    return math.sqrt((circ_distance ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2)) + straight_distance
 
     @property
     def actual_weight(self):
