@@ -22,7 +22,13 @@ class Performance(Entity):
     def actual_weight(self):
         """Return the total combined weight of the horse and jockey"""
 
-        return self['carried'] + HORSE_WEIGHT
+        if self['carried'] is None:
+            if self['weight'] is None:
+                return HORSE_WEIGHT
+            else:
+                return self['weight'] + HORSE_WEIGHT
+        else:
+            return self['carried'] + HORSE_WEIGHT
 
     @property
     def has_expired(self):
