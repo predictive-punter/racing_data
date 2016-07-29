@@ -139,4 +139,4 @@ class PerformanceList(list):
     def count_results(self, result):
         """Count the number of performances with the specified result in this list"""
 
-        return len([performance for performance in self if performance['result'] == result])
+        return len([performance for performance in self if performance['result'] is not None and performance['result'] == result])

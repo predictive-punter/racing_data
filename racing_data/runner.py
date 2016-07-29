@@ -41,7 +41,7 @@ class Runner(Entity):
     def age(self):
         """Return the horse's age as at the date of the race"""
 
-        if 'foaled' in self.horse:
+        if 'foaled' in self.horse and self.horse['foaled'] is not None:
             return (self.race.meet['date'] - self.horse['foaled']).days / 365
 
     @property
@@ -49,7 +49,7 @@ class Runner(Entity):
         """Return a PerformanceList containing all prior performances for the horse within 100m of the current race distance"""
 
         def generate_at_distance():
-            return PerformanceList([performance for performance in self.career if self.race['distance'] - 100 < performance['distance'] < self.race['distance'] + 100])
+            return PerformanceList([performance for performance in self.career if performance['distance'] is not None and self.race['distance'] - 100 < performance['distance'] < self.race['distance'] + 100])
 
         return self.get_cached_property('at_distance', generate_at_distance)
 
@@ -189,7 +189,7 @@ class Runner(Entity):
         """Return a PerformanceList containing all prior performances for the horse on turf tracks"""
 
         def generate_on_turf():
-            return PerformanceList([performance for performance in self.career if performance['track_condition'] is not None and 'SYNTHETIC' not in performance['track_condition']])
+            return PerformanceList([performance for performance in self.career if performance['track_condition'] is not None and 'SYNTHETIC' not in performance['track_condition'].upper()])
 
         return self.get_cached_property('on_turf', generate_on_turf)
 
@@ -222,7 +222,7 @@ class Runner(Entity):
             if self.spell is not None and self.spell < 90:
                 for performance in self.career:
                     performances.append(performance)
-                    if performance.spell >= 90:
+                    if performance.spell is None or performance.spell >= 90:
                         break
             return PerformanceList(performances)
 
@@ -252,7 +252,7 @@ class Runner(Entity):
     def up(self):
         """Return the number of races run by the horse, including this one, since its last spell of 90 days or more"""
 
-        if self.spell >= 90:
+        if self.spell is None or self.spell >= 90:
             return 1
         else:
             if self.previous_performance is None:
@@ -272,7 +272,7 @@ class Runner(Entity):
     def get_performance_list_on_track_condition(self, track_condition):
         """Return a PerformanceList containing all prior past performances for the horse on the specified track condition"""
 
-        return PerformanceList([performance for performance in self.career if performance['track_condition'] is not None and track_condition.upper() in performance['track_condition']])
+        return PerformanceList([performance for performance in self.career if performance['track_condition'] is not None and track_condition.upper() in performance['track_condition'].upper()])
 
     def is_equivalent_to(self, other_runner):
         """This runner is equivalent to other_runner if both have the same race_id and number"""

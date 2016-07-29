@@ -12,7 +12,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='racing_data',
-    version='1.0.0b4',
+    version='1.0.0b5',
     description='Python horse racing class library',
     long_description=long_description,
     keywords='horse racing class library',
