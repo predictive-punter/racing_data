@@ -8,6 +8,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.0.0b8] - 2016-07-29
 
 ### Fixed
+- Fix TypeError in Performance.actual_distance (from @justjasongreen)
+
+
+## [1.0.0b8] - 2016-07-29
+
+### Fixed
 - Fix ZeroDivisionError in Performance.speed (from @justjasongreen)
 
 

@@ -15,8 +15,19 @@ class Performance(Entity):
     def actual_distance(self):
         """Return the actual distance run by the horse in the winning time"""
 
+        actual_distance = None
+
         if self['distance'] is not None:
-            return math.sqrt((self['distance'] ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2)) - (self['lengths'] * METRES_PER_LENGTH)
+            if self['barrier'] is not None:
+                actual_distance = math.sqrt((self['distance'] ** 2) + ((self['barrier'] * BARRIER_WIDTH) ** 2))
+            else:
+                actual_distance = self['distance']
+
+        if actual_distance is not None:
+            if self['lengths'] is not None:
+                return actual_distance - (self['lengths'] * METRES_PER_LENGTH)
+            else:
+                return actual_distance
 
     @property
     def actual_weight(self):
