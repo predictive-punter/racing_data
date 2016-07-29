@@ -1,4 +1,4 @@
-__version__ = '1.0.0b7'
+__version__ = '1.0.0b8'
 
 from .performance_list import PerformanceList
 from .entity import Entity
